@@ -126,7 +126,7 @@ S = B ∙ (B ∙ W) ∙ (B ∙ B ∙ C)
 
 prop-S : ∀ {X} {Y} {Z} → ⊢ S ∙ X ∙ Y ∙ Z == X ∙ Z ∙ (Y ∙ Z)
 prop-S {X} {Y} {Z} = begin
-  S ∙ X ∙ Y ∙ Z ≈⟨⟩
+  S ∙ X ∙ Y ∙ Z                          ≈⟨⟩
   B ∙ (B ∙ W) ∙ (B ∙ B ∙ C) ∙ X ∙ Y ∙ Z  ≈⟨ ∙-congʳ $ ∙-congʳ B ⟩
   B ∙ W ∙ (B ∙ B ∙ C ∙ X) ∙ Y ∙ Z        ≈⟨ ∙-congʳ B ⟩
   W ∙ (B ∙ B ∙ C ∙ X ∙ Y) ∙ Z            ≈⟨ W ⟩
