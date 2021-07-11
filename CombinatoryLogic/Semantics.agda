@@ -24,10 +24,8 @@ data Axiom : Combinator → Set where
   WK : Axiom (B ∙ W ∙ K == B ∙ I)
   I₂ : Axiom (B ∙ I == I)
 
--- TODO: fixity definition
-infix 4 ⊢_
-
 -- Kapitel 1, Abschnitt C, §4 (Symbolische Festsetzungen), Festsetzung 1
+infix 4 ⊢_
 data ⊢_ : Combinator → Set where
   ax : ∀ {X} → Axiom X → ⊢ X
 
