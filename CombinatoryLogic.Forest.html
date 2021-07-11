@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>CombinatoryLogic.Forest</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Keyword">module</a> <a id="8" href="CombinatoryLogic.Forest.html" class="Module">CombinatoryLogic.Forest</a> <a id="32" class="Keyword">where</a>
+
+<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Data.Product.html" class="Module">Data.Product</a> <a id="64" class="Keyword">using</a> <a id="70" class="Symbol">(</a><a id="71" href="Agda.Builtin.Sigma.html#236" class="InductiveConstructor Operator">_,_</a><a id="74" class="Symbol">)</a>
+<a id="76" class="Keyword">open</a> <a id="81" class="Keyword">import</a> <a id="88" href="Function.html" class="Module">Function</a> <a id="97" class="Keyword">using</a> <a id="103" class="Symbol">(</a><a id="104" href="Function.Base.html#1919" class="Function Operator">_$_</a><a id="107" class="Symbol">)</a>
+<a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Mockingbird.Forest.html" class="Module">Mockingbird.Forest</a> <a id="140" class="Keyword">using</a> <a id="146" class="Symbol">(</a><a id="147" href="Mockingbird.Forest.Base.html#703" class="Record">Forest</a><a id="153" class="Symbol">)</a>
+
+<a id="156" class="Keyword">open</a> <a id="161" class="Keyword">import</a> <a id="168" href="CombinatoryLogic.Equality.html" class="Module">CombinatoryLogic.Equality</a> <a id="194" class="Symbol">as</a> <a id="197" class="Module">Equality</a> <a id="206" class="Keyword">using</a> <a id="212" class="Symbol">(</a><a id="213" href="CombinatoryLogic.Equality.html#2972" class="Function">isEquivalence</a><a id="226" class="Symbol">;</a> <a id="228" href="CombinatoryLogic.Equality.html#3748" class="Function">∙-cong</a><a id="234" class="Symbol">)</a>
+<a id="236" class="Keyword">open</a> <a id="241" class="Keyword">import</a> <a id="248" href="CombinatoryLogic.Semantics.html" class="Module">CombinatoryLogic.Semantics</a> <a id="275" class="Symbol">as</a> <a id="278" class="Module">⊢</a> <a id="280" class="Keyword">using</a> <a id="286" class="Symbol">(</a><a id="287" href="CombinatoryLogic.Semantics.html#1817" class="Function Operator">_≈_</a><a id="290" class="Symbol">)</a>
+<a id="292" class="Keyword">open</a> <a id="297" class="Keyword">import</a> <a id="304" href="CombinatoryLogic.Syntax.html" class="Module">CombinatoryLogic.Syntax</a> <a id="328" class="Symbol">as</a> <a id="331" class="Module">Syntax</a> <a id="338" class="Keyword">using</a> <a id="344" class="Symbol">(</a><a id="345" href="CombinatoryLogic.Syntax.html#238" class="Datatype">Combinator</a><a id="355" class="Symbol">)</a>
+
+<a id="forest"></a><a id="358" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a> <a id="365" class="Symbol">:</a> <a id="367" href="Mockingbird.Forest.Base.html#703" class="Record">Forest</a>
+<a id="374" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a> <a id="381" class="Symbol">=</a> <a id="383" class="Keyword">record</a>
+  <a id="392" class="Symbol">{</a> <a id="394" href="Mockingbird.Forest.Base.html#786" class="Field">Bird</a> <a id="399" class="Symbol">=</a> <a id="401" href="CombinatoryLogic.Syntax.html#238" class="Datatype">Combinator</a>
+  <a id="414" class="Symbol">;</a> <a id="416" href="Mockingbird.Forest.Base.html#803" class="Field Operator">_≈_</a> <a id="420" class="Symbol">=</a> <a id="422" href="CombinatoryLogic.Semantics.html#1817" class="Function Operator">_≈_</a>
+  <a id="428" class="Symbol">;</a> <a id="430" href="Mockingbird.Forest.Base.html#824" class="Field Operator">_∙_</a> <a id="434" class="Symbol">=</a> <a id="436" href="CombinatoryLogic.Syntax.html#402" class="InductiveConstructor Operator">Syntax._∙_</a>
+  <a id="449" class="Symbol">;</a> <a id="451" href="Mockingbird.Forest.Base.html#843" class="Field">isForest</a> <a id="460" class="Symbol">=</a> <a id="462" class="Keyword">record</a>
+    <a id="473" class="Symbol">{</a> <a id="475" href="Mockingbird.Forest.Base.html#376" class="Field">isEquivalence</a> <a id="489" class="Symbol">=</a> <a id="491" href="CombinatoryLogic.Equality.html#2972" class="Function">isEquivalence</a>
+    <a id="509" class="Symbol">;</a> <a id="511" href="Mockingbird.Forest.Base.html#414" class="Field">∙-cong</a> <a id="518" class="Symbol">=</a> <a id="520" href="CombinatoryLogic.Equality.html#3748" class="Function">∙-cong</a>
+    <a id="531" class="Symbol">}</a>
+  <a id="535" class="Symbol">}</a>
+
+<a id="538" class="Keyword">open</a> <a id="543" href="Mockingbird.Forest.Base.html#703" class="Module">Forest</a> <a id="550" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a>
+
+<a id="558" class="Keyword">open</a> <a id="563" class="Keyword">import</a> <a id="570" href="Mockingbird.Forest.Birds.html" class="Module">Mockingbird.Forest.Birds</a> <a id="595" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a>
+<a id="602" class="Keyword">open</a> <a id="607" class="Keyword">import</a> <a id="614" href="Mockingbird.Forest.Extensionality.html" class="Module">Mockingbird.Forest.Extensionality</a> <a id="648" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a>
+<a id="655" class="Keyword">import</a> <a id="662" href="Mockingbird.Problems.Chapter11.html" class="Module">Mockingbird.Problems.Chapter11</a> <a id="693" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a> <a id="700" class="Symbol">as</a> <a id="Chapter₁₁"></a><a id="703" href="CombinatoryLogic.Forest.html#703" class="Module">Chapter₁₁</a>
+<a id="713" class="Keyword">import</a> <a id="720" href="Mockingbird.Problems.Chapter12.html" class="Module">Mockingbird.Problems.Chapter12</a> <a id="751" href="CombinatoryLogic.Forest.html#358" class="Function">forest</a> <a id="758" class="Symbol">as</a> <a id="Chapter₁₂"></a><a id="761" href="CombinatoryLogic.Forest.html#761" class="Module">Chapter₁₂</a>
+
+<a id="772" class="Keyword">instance</a>
+  <a id="hasWarbler"></a><a id="783" href="CombinatoryLogic.Forest.html#783" class="Function">hasWarbler</a> <a id="794" class="Symbol">:</a> <a id="796" href="Mockingbird.Forest.Birds.html#4627" class="Record">HasWarbler</a>
+  <a id="809" href="CombinatoryLogic.Forest.html#783" class="Function">hasWarbler</a> <a id="820" class="Symbol">=</a> <a id="822" class="Keyword">record</a>
+    <a id="833" class="Symbol">{</a> <a id="835" href="Mockingbird.Forest.Birds.html#4670" class="Field">W</a> <a id="837" class="Symbol">=</a> <a id="839" href="CombinatoryLogic.Syntax.html#328" class="InductiveConstructor">Syntax.W</a>
+    <a id="852" class="Symbol">;</a> <a id="854" href="Mockingbird.Forest.Birds.html#4683" class="Field">isWarbler</a> <a id="864" class="Symbol">=</a> <a id="866" class="Symbol">λ</a> <a id="868" href="CombinatoryLogic.Forest.html#868" class="Bound">_</a> <a id="870" href="CombinatoryLogic.Forest.html#870" class="Bound">_</a> <a id="872" class="Symbol">→</a> <a id="874" href="CombinatoryLogic.Semantics.html#1512" class="InductiveConstructor">⊢.W</a>
+    <a id="882" class="Symbol">}</a>
+
+  <a id="hasKestrel"></a><a id="887" href="CombinatoryLogic.Forest.html#887" class="Function">hasKestrel</a> <a id="898" class="Symbol">:</a> <a id="900" href="Mockingbird.Forest.Birds.html#1834" class="Record">HasKestrel</a>
+  <a id="913" href="CombinatoryLogic.Forest.html#887" class="Function">hasKestrel</a> <a id="924" class="Symbol">=</a> <a id="926" class="Keyword">record</a>
+    <a id="937" class="Symbol">{</a> <a id="939" href="Mockingbird.Forest.Birds.html#1877" class="Field">K</a> <a id="941" class="Symbol">=</a> <a id="943" href="CombinatoryLogic.Syntax.html#330" class="InductiveConstructor">Syntax.K</a>
+    <a id="956" class="Symbol">;</a> <a id="958" href="Mockingbird.Forest.Birds.html#1890" class="Field">isKestrel</a> <a id="968" class="Symbol">=</a> <a id="970" class="Symbol">λ</a> <a id="972" href="CombinatoryLogic.Forest.html#972" class="Bound">_</a> <a id="974" href="CombinatoryLogic.Forest.html#974" class="Bound">_</a> <a id="976" class="Symbol">→</a> <a id="978" href="CombinatoryLogic.Semantics.html#1553" class="InductiveConstructor">⊢.K</a>
+    <a id="986" class="Symbol">}</a>
+
+  <a id="hasBluebird"></a><a id="991" href="CombinatoryLogic.Forest.html#991" class="Function">hasBluebird</a> <a id="1003" class="Symbol">:</a> <a id="1005" href="Mockingbird.Forest.Birds.html#2603" class="Record">HasBluebird</a>
+  <a id="1019" href="CombinatoryLogic.Forest.html#991" class="Function">hasBluebird</a> <a id="1031" class="Symbol">=</a> <a id="1033" class="Keyword">record</a>
+    <a id="1044" class="Symbol">{</a> <a id="1046" href="Mockingbird.Forest.Birds.html#2647" class="Field">B</a> <a id="1048" class="Symbol">=</a> <a id="1050" href="CombinatoryLogic.Syntax.html#324" class="InductiveConstructor">Syntax.B</a>
+    <a id="1063" class="Symbol">;</a> <a id="1065" href="Mockingbird.Forest.Birds.html#2660" class="Field">isBluebird</a> <a id="1076" class="Symbol">=</a> <a id="1078" class="Symbol">λ</a> <a id="1080" href="CombinatoryLogic.Forest.html#1080" class="Bound">_</a> <a id="1082" href="CombinatoryLogic.Forest.html#1082" class="Bound">_</a> <a id="1084" href="CombinatoryLogic.Forest.html#1084" class="Bound">_</a> <a id="1086" class="Symbol">→</a> <a id="1088" href="CombinatoryLogic.Semantics.html#1416" class="InductiveConstructor">⊢.B</a>
+    <a id="1096" class="Symbol">}</a>
+
+  <a id="hasIdentity"></a><a id="1101" href="CombinatoryLogic.Forest.html#1101" class="Function">hasIdentity</a> <a id="1113" class="Symbol">:</a> <a id="1115" href="Mockingbird.Forest.Birds.html#2017" class="Record">HasIdentity</a>
+  <a id="1129" href="CombinatoryLogic.Forest.html#1101" class="Function">hasIdentity</a> <a id="1141" class="Symbol">=</a> <a id="1143" class="Keyword">record</a>
+    <a id="1154" class="Symbol">{</a> <a id="1156" href="Mockingbird.Forest.Birds.html#2061" class="Field">I</a> <a id="1158" class="Symbol">=</a> <a id="1160" href="CombinatoryLogic.Syntax.html#1321" class="Function">Syntax.I</a>
+    <a id="1173" class="Symbol">;</a> <a id="1175" href="Mockingbird.Forest.Birds.html#2074" class="Field">isIdentity</a> <a id="1186" class="Symbol">=</a> <a id="1188" class="Symbol">λ</a> <a id="1190" href="CombinatoryLogic.Forest.html#1190" class="Bound">_</a> <a id="1192" class="Symbol">→</a> <a id="1194" href="CombinatoryLogic.Equality.html#4186" class="Function">Equality.prop₉</a>
+    <a id="1213" class="Symbol">}</a>
+
+  <a id="hasMockingbird"></a><a id="1218" href="CombinatoryLogic.Forest.html#1218" class="Function">hasMockingbird</a> <a id="1233" class="Symbol">:</a> <a id="1235" href="Mockingbird.Forest.Birds.html#914" class="Record">HasMockingbird</a>
+  <a id="1252" href="CombinatoryLogic.Forest.html#1218" class="Function">hasMockingbird</a> <a id="1267" class="Symbol">=</a> <a id="1269" href="Mockingbird.Problems.Chapter11.html#5719" class="Function">Chapter₁₁.problem₁₄</a>
+
+  <a id="hasLark"></a><a id="1292" href="CombinatoryLogic.Forest.html#1292" class="Function">hasLark</a> <a id="1300" class="Symbol">:</a> <a id="1302" href="Mockingbird.Forest.Birds.html#2214" class="Record">HasLark</a>
+  <a id="1312" href="CombinatoryLogic.Forest.html#1292" class="Function">hasLark</a> <a id="1320" class="Symbol">=</a> <a id="1322" href="Mockingbird.Problems.Chapter12.html#1437" class="Function">Chapter₁₂.problem₃</a>
+
+  <a id="hasComposition"></a><a id="1344" href="CombinatoryLogic.Forest.html#1344" class="Function">hasComposition</a> <a id="1359" class="Symbol">:</a> <a id="1361" href="Mockingbird.Forest.Birds.html#654" class="Record">HasComposition</a>
+  <a id="1378" href="CombinatoryLogic.Forest.html#1344" class="Function">hasComposition</a> <a id="1393" class="Symbol">=</a> <a id="1395" href="Mockingbird.Problems.Chapter11.html#1657" class="Function">Chapter₁₁.problem₁</a>
+</pre></body></html>
