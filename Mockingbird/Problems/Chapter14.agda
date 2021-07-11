@@ -22,7 +22,7 @@ private
 module _ {d} {Day : Set d} {_SingsOn_ : Bird → Day → Set d}
          (respects : ∀ {d} → (_SingsOn d) Respects _≈_)
          (P : Bird)
-         -- This law of exluded middle is not stated in the problem as one of
+         -- This law of excluded middle is not stated in the problem as one of
          -- the laws, but in the solution given in the book, it is used.
          (LEM : ∀ x d → (x SingsOn d) ⊎ (¬ (x SingsOn d))) where
 
