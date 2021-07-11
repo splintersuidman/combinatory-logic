@@ -39,7 +39,7 @@ subst′ respects y≈x = subst respects (sym y≈x)
       (y∈⟨P⟩ , y∈⟨Q⟩) = ⟨_∩_⟩ P Q y∈⟨P∩Q⟩
   in (x∈⟨P⟩ ⟨∙⟩ y∈⟨P⟩ ∣ xy≈z , x∈⟨Q⟩ ⟨∙⟩ y∈⟨Q⟩ ∣ xy≈z)
 
--- NOTE: the inclusion ⟨P⟩ ∩ ⟨Q⟩ ⊆ ⟨P ∩ Q⟩ does not hold for alle P and Q; let
+-- NOTE: the inclusion ⟨P⟩ ∩ ⟨Q⟩ ⊆ ⟨P ∩ Q⟩ does not hold for all P and Q; let
 -- for example P = {S, K}, Q = {I}, then SKK = I ∈ ⟨P⟩ ∩ ⟨Q⟩, but P ∩ Q = ∅, and
--- hence SKK = I ∉ P ∩ Q.
+-- hence SKK = I ∉ ⟨P ∩ Q⟩.
 -- TODO: formalise
