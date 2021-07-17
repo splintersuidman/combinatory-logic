@@ -29,7 +29,7 @@ module _ ⦃ _ : Extensional ⦄ ⦃ _ : HasCardinal ⦄ ⦃ _ : HasIdentity ⦄
     CI≈T : C ∙ I ≈ T
     CI≈T = ext $ λ x → ext $ λ y → begin
       C ∙ I ∙ x ∙ y  ≈⟨ isCardinal I x y ⟩
-      I ∙ y ∙ x      ≈⟨ ∙-congʳ $ isIdentity y ⟩
+      I ∙ y ∙ x      ≈⟨ congʳ $ isIdentity y ⟩
       y ∙ x          ≈˘⟨ isThrush x y ⟩
       T ∙ x ∙ y      ∎
   

@@ -4,7 +4,7 @@ open import Data.Product using (_,_)
 open import Function using (_$_)
 open import Mockingbird.Forest using (Forest)
 
-open import CombinatoryLogic.Equality as Equality using (isEquivalence; ∙-cong)
+open import CombinatoryLogic.Equality as Equality using (isEquivalence; cong)
 open import CombinatoryLogic.Semantics as ⊢ using (_≈_)
 open import CombinatoryLogic.Syntax as Syntax using (Combinator)
 
@@ -15,7 +15,7 @@ forest = record
   ; _∙_ = Syntax._∙_
   ; isForest = record
     { isEquivalence = isEquivalence
-    ; ∙-cong = ∙-cong
+    ; cong = cong
     }
   }
 

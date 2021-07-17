@@ -41,12 +41,12 @@ module Parentheses where
   exercise-f = refl
 
   exercise-g : A₁ ≈ A₂ → B ∙ A₁ ≈ B ∙ A₂ × A₁ ∙ B ≈ A₂ ∙ B
-  exercise-g A₁≈A₂ = (∙-congˡ A₁≈A₂ , ∙-congʳ A₁≈A₂)
+  exercise-g A₁≈A₂ = (congˡ A₁≈A₂ , congʳ A₁≈A₂)
 
   exercise-h : x ∙ y ≈ z → x ∙ y ∙ w ≈ z ∙ w
   exercise-h {x} {y} {z} {w} xy≈z = begin
     x ∙ y ∙ w      ≈⟨⟩
-    (x ∙′ y) ∙′ w  ≈⟨ ∙-congʳ xy≈z ⟩
+    (x ∙′ y) ∙′ w  ≈⟨ congʳ xy≈z ⟩
     z ∙ w          ∎
 
   -- The other part of exercise h, wxy ≈ wz, does not follow in general.
@@ -74,7 +74,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasMockingbird ⦄ where
         shorten : M ∙ (B ∙ x ∙ M) ≈ B ∙ x ∙ M ∙ (B ∙ x ∙ M)
         shorten = isMockingbird (B ∙ x ∙ M)
 
-    in (M ∙ (B ∙ x ∙ M) , trans (∙-congˡ shorten) (trans isFond (sym shorten)))
+    in (M ∙ (B ∙ x ∙ M) , trans (congˡ shorten) (trans isFond (sym shorten)))
 
   problem₃ : ∃[ x ] IsEgocentric x
   problem₃ =
@@ -92,7 +92,7 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₅ = record
     { D = B ∙ B
     ; isDove = λ x y z w → begin
-        B ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird B x y ⟩
+        B ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ isBluebird B x y ⟩
         B ∙ (x ∙ y) ∙ z ∙ w    ≈⟨ isBluebird (x ∙ y) z w ⟩
         x ∙ y ∙ (z ∙ w)        ∎
     }
@@ -103,8 +103,8 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₆ = record
     { B₁ = B ∙ B ∙ B
     ; isBlackbird = λ x y z w → begin
-        B ∙ B ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ (isBluebird B B x) ⟩
-        B ∙ (B ∙ x) ∙ y ∙ z ∙ w    ≈⟨ ∙-congʳ (isBluebird (B ∙ x) y z) ⟩
+        B ∙ B ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ congʳ (isBluebird B B x) ⟩
+        B ∙ (B ∙ x) ∙ y ∙ z ∙ w    ≈⟨ congʳ (isBluebird (B ∙ x) y z) ⟩
         B ∙ x ∙ (y ∙ z) ∙ w        ≈⟨ isBluebird x (y ∙ z) w ⟩
         x ∙ (y ∙ z ∙ w)            ∎
     }
@@ -115,7 +115,7 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₇ = record
     { E = B ∙ B₁
     ; isEagle = λ x y z w v → begin
-        B ∙ B₁ ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird B₁ x y ⟩
+        B ∙ B₁ ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird B₁ x y ⟩
         B₁ ∙ (x ∙ y) ∙ z ∙ w ∙ v    ≈⟨ isBlackbird (x ∙ y) z w v ⟩
         x ∙ y ∙ (z ∙ w ∙ v)         ∎
     }
@@ -126,8 +126,8 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₈ = record
     { B₂ = B ∙ B ∙ B₁
     ; isBunting = λ x y z w v → begin
-        B ∙ B ∙ B₁ ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird B B₁ x ⟩
-        B ∙ (B₁ ∙ x) ∙ y ∙ z ∙ w ∙ v    ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird (B₁ ∙ x) y z ⟩
+        B ∙ B ∙ B₁ ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ congʳ $ congʳ $ congʳ $ congʳ $ isBluebird B B₁ x ⟩
+        B ∙ (B₁ ∙ x) ∙ y ∙ z ∙ w ∙ v    ≈⟨ congʳ $ congʳ $ isBluebird (B₁ ∙ x) y z ⟩
         B₁ ∙ x ∙ (y ∙ z) ∙ w ∙ v        ≈⟨ isBlackbird x (y ∙ z) w v ⟩
         x ∙ (y ∙ z ∙ w ∙ v)             ∎
     }
@@ -138,7 +138,7 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₉ = record
     { D₁ = B ∙ D
     ; isDickcissel = λ x y z w v → begin
-        B ∙ D ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird D x y ⟩
+        B ∙ D ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird D x y ⟩
         D ∙ (x ∙ y) ∙ z ∙ w ∙ v    ≈⟨ isDove (x ∙ y) z w v ⟩
         x ∙ y ∙ z ∙ (w ∙ v)        ∎
     }
@@ -149,7 +149,7 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₁₀ = record
     { B₃ = B ∙ D ∙ B
     ; isBecard = λ x y z w → begin
-        B ∙ D ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird D B x ⟩
+        B ∙ D ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird D B x ⟩
         D ∙ (B ∙ x) ∙ y ∙ z ∙ w    ≈⟨ isDove (B ∙ x) y z w ⟩
         B ∙ x ∙ y ∙ (z ∙ w)        ≈⟨ isBluebird x y (z ∙ w) ⟩
         x ∙ (y ∙ (z ∙ w))          ∎
@@ -161,7 +161,7 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₁₁ = record
     { D₂ = D ∙ D
     ; isDovekie = λ x y z w v → begin
-        D ∙ D ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ ∙-congʳ $ ∙-congʳ $ isDove D x y z ⟩
+        D ∙ D ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ congʳ $ congʳ $ isDove D x y z ⟩
         D ∙ x ∙ (y ∙ z) ∙ w ∙ v    ≈⟨ isDove x (y ∙ z) w v ⟩
         x ∙ (y ∙ z) ∙ (w ∙ v)      ∎
     }
@@ -172,7 +172,7 @@ module _ ⦃ _ : HasBluebird ⦄ where
   problem₁₂ = record
     { Ê = E ∙ E
     ; isBaldEagle = λ x y₁ y₂ y₃ z₁ z₂ z₃ → begin
-        E ∙ E ∙ x ∙ y₁ ∙ y₂ ∙ y₃ ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isEagle E x y₁ y₂ y₃ ⟩
+        E ∙ E ∙ x ∙ y₁ ∙ y₂ ∙ y₃ ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ congʳ $ congʳ $ congʳ $ isEagle E x y₁ y₂ y₃ ⟩
         E ∙ x ∙ (y₁ ∙ y₂ ∙ y₃) ∙ z₁ ∙ z₂ ∙ z₃    ≈⟨ isEagle x (y₁ ∙ y₂ ∙ y₃) z₁ z₂ z₃ ⟩
         x ∙ (y₁ ∙ y₂ ∙ y₃) ∙ (z₁ ∙ z₂ ∙ z₃)      ∎
     }
@@ -184,7 +184,7 @@ problem₁₄ = record
   { M = W ∙ I
   ; isMockingbird = λ x → begin
       W ∙ I ∙ x  ≈⟨ isWarbler I x ⟩
-      I ∙ x ∙ x  ≈⟨ ∙-congʳ $ isIdentity x ⟩
+      I ∙ x ∙ x  ≈⟨ congʳ $ isIdentity x ⟩
       x ∙ x      ∎
   }
 
@@ -215,7 +215,7 @@ problem₁₇ = record
   { T = C ∙ I
   ; isThrush = λ x y → begin
       C ∙ I ∙ x ∙ y  ≈⟨ isCardinal I x y ⟩
-      I ∙ y ∙ x      ≈⟨ ∙-congʳ $ isIdentity y ⟩
+      I ∙ y ∙ x      ≈⟨ congʳ $ isIdentity y ⟩
       y ∙ x          ∎
   }
 
@@ -225,7 +225,7 @@ problem₁₈ isNormal =
 
       commute : ∀ x → Commute A x
       commute x = begin
-        A ∙ x      ≈˘⟨ (∙-congʳ $ isFond) ⟩
+        A ∙ x      ≈˘⟨ (congʳ $ isFond) ⟩
         T ∙ A ∙ x  ≈⟨ isThrush A x ⟩
         x ∙ A      ∎
 
@@ -238,7 +238,7 @@ problem₂₀ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ → HasRobin
 problem₂₀ = record
   { R = B ∙ B ∙ T
   ; isRobin = λ x y z → begin
-      B ∙ B ∙ T ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird B T x ⟩
+      B ∙ B ∙ T ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isBluebird B T x ⟩
       B ∙ (T ∙ x) ∙ y ∙ z    ≈⟨ isBluebird (T ∙ x) y z ⟩
       T ∙ x ∙ (y ∙ z)        ≈⟨ isThrush x (y ∙ z) ⟩
       (y ∙ z) ∙ x            ≈⟨⟩
@@ -249,8 +249,8 @@ problem₂₁ : ⦃ _ : HasRobin ⦄ → HasCardinal
 problem₂₁ = record
   { C = R ∙ R ∙ R
   ; isCardinal = λ x y z → begin
-      R ∙ R ∙ R ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isRobin R R x ⟩
-      R ∙ x ∙ R ∙ y ∙ z      ≈⟨ ∙-congʳ $ isRobin x R y ⟩
+      R ∙ R ∙ R ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isRobin R R x ⟩
+      R ∙ x ∙ R ∙ y ∙ z      ≈⟨ congʳ $ isRobin x R y ⟩
       R ∙ y ∙ x ∙ z          ≈⟨ isRobin y x z ⟩
       x ∙ z ∙ y              ∎
   }
@@ -262,7 +262,7 @@ problem₂₁-bonus : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ → HasCardi
 problem₂₁-bonus = record
   { C = B ∙ (T ∙ (B ∙ B ∙ T)) ∙ (B ∙ B ∙ T)
   ; isCardinal = λ x y z → begin
-      B ∙ (T ∙ (B ∙ B ∙ T)) ∙ (B ∙ B ∙ T) ∙ x ∙ y ∙ z    ≈˘⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird B T (B ∙ B ∙ T) ⟩
+      B ∙ (T ∙ (B ∙ B ∙ T)) ∙ (B ∙ B ∙ T) ∙ x ∙ y ∙ z    ≈˘⟨ congʳ $ congʳ $ congʳ $ congʳ $ isBluebird B T (B ∙ B ∙ T) ⟩
       B ∙ B ∙ T ∙ (B ∙ B ∙ T) ∙ (B ∙ B ∙ T) ∙ x ∙ y ∙ z  ≈⟨ isCardinal x y z ⟩
       x ∙ z ∙ y                                          ∎
   } where instance hasCardinal = problem₂₁′
@@ -282,14 +282,14 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ where
   problem₂₂-b x = begin
     C ∙ x ≈⟨ problem₂₂-a x ⟩
     R ∙ x ∙ R          ≈⟨⟩
-    B ∙ B ∙ T ∙ x ∙ R  ≈⟨ ∙-congʳ $ isBluebird B T x ⟩
+    B ∙ B ∙ T ∙ x ∙ R  ≈⟨ congʳ $ isBluebird B T x ⟩
     B ∙ (T ∙ x) ∙ R    ∎
 
 problem₂₃ : ⦃ _ : HasCardinal ⦄ → HasRobin
 problem₂₃ = record
   { R = C ∙ C
   ; isRobin = λ x y z → begin
-      C ∙ C ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal C x y ⟩
+      C ∙ C ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal C x y ⟩
       C ∙ y ∙ x ∙ z      ≈⟨ isCardinal y x z ⟩
       y ∙ z ∙ x          ∎
   }
@@ -298,7 +298,7 @@ problem₂₄ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasRobin ⦄ ⦃ _ : HasCardinal
 problem₂₄ = record
   { F = B ∙ C ∙ R
   ; isFinch = λ x y z → begin
-      B ∙ C ∙ R ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird C R x ⟩
+      B ∙ C ∙ R ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isBluebird C R x ⟩
       C ∙ (R ∙ x) ∙ y ∙ z    ≈⟨ isCardinal (R ∙ x) y z ⟩
       R ∙ x ∙ z ∙ y          ≈⟨ isRobin x z y ⟩
       z ∙ y ∙ x              ∎
@@ -308,11 +308,11 @@ problem₂₅ : ⦃ _ : HasThrush ⦄ ⦃ _ : HasEagle ⦄ → HasFinch
 problem₂₅ = record
   { F = E ∙ T ∙ T ∙ E ∙ T
   ; isFinch = λ x y z → begin
-      E ∙ T ∙ T ∙ E ∙ T ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isEagle T T E T x ⟩
-      T ∙ T ∙ (E ∙ T ∙ x) ∙ y ∙ z    ≈⟨ ∙-congʳ $ ∙-congʳ $ isThrush T (E ∙ T ∙ x) ⟩
+      E ∙ T ∙ T ∙ E ∙ T ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isEagle T T E T x ⟩
+      T ∙ T ∙ (E ∙ T ∙ x) ∙ y ∙ z    ≈⟨ congʳ $ congʳ $ isThrush T (E ∙ T ∙ x) ⟩
       E ∙ T ∙ x ∙ T ∙ y ∙ z          ≈⟨ isEagle T x T y z ⟩
       T ∙ x ∙ (T ∙ y ∙ z)            ≈⟨ isThrush x (T ∙ y ∙ z) ⟩
-      T ∙ y ∙ z ∙ x                  ≈⟨ ∙-congʳ $ isThrush y z ⟩
+      T ∙ y ∙ z ∙ x                  ≈⟨ congʳ $ isThrush y z ⟩
       z ∙ y ∙ x                      ∎
   }
 
@@ -340,14 +340,14 @@ problem₂₆ = record
     short≈ETTET = begin
       short                                            ≈⟨⟩
       B ∙ (T ∙ T) ∙ (B ∙ (B ∙ B ∙ B) ∙ T)              ≈˘⟨ isBluebird (B ∙ (T ∙ T)) (B ∙ (B ∙ B ∙ B)) T ⟩
-      B ∙ (B ∙ (T ∙ T)) ∙ (B ∙ (B ∙ B ∙ B)) ∙ T        ≈˘⟨ ∙-congʳ $ ∙-congʳ $ isBluebird B B (T ∙ T) ⟩
-      B ∙ B ∙ B ∙ (T ∙ T) ∙ (B ∙ (B ∙ B ∙ B)) ∙ T      ≈˘⟨ ∙-congʳ $ ∙-congʳ $ isBluebird (B ∙ B ∙ B) T T ⟩
+      B ∙ (B ∙ (T ∙ T)) ∙ (B ∙ (B ∙ B ∙ B)) ∙ T        ≈˘⟨ congʳ $ congʳ $ isBluebird B B (T ∙ T) ⟩
+      B ∙ B ∙ B ∙ (T ∙ T) ∙ (B ∙ (B ∙ B ∙ B)) ∙ T      ≈˘⟨ congʳ $ congʳ $ isBluebird (B ∙ B ∙ B) T T ⟩
       B ∙ (B ∙ B ∙ B) ∙ T ∙ T ∙ (B ∙ (B ∙ B ∙ B)) ∙ T  ≈⟨⟩
       E ∙ T ∙ T ∙ E ∙ T                                ∎
 
     shortIsFinch : IsFinch short
     shortIsFinch x y z = begin
-      short ∙ x ∙ y ∙ z              ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ short≈ETTET ⟩
+      short ∙ x ∙ y ∙ z              ≈⟨ congʳ $ congʳ $ congʳ $ short≈ETTET ⟩
       E ∙ T ∙ T ∙ E ∙ T ∙ x ∙ y ∙ z  ≈⟨ HasFinch.isFinch problem₂₅ x y z ⟩
       z ∙ y ∙ x                      ∎
 
@@ -355,7 +355,7 @@ problem₂₇ : ⦃ _ : HasCardinal ⦄ ⦃ _ : HasFinch ⦄ → HasVireo
 problem₂₇ = record
   { V = C ∙ F
   ; isVireo = λ x y z → begin
-      C ∙ F ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal F x y ⟩
+      C ∙ F ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal F x y ⟩
       F ∙ y ∙ x ∙ z      ≈⟨ isFinch y x z ⟩
       z ∙ x ∙ y          ∎
   }
@@ -364,8 +364,8 @@ problem₂₈ : ⦃ _ : HasFinch ⦄ ⦃ _ : HasRobin ⦄ → HasVireo
 problem₂₈ = record
   { V = R ∙ F ∙ R
   ; isVireo = λ x y z → begin
-      R ∙ F ∙ R ∙ x ∙ y ∙ z      ≈˘⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isRobin R R F ⟩
-      R ∙ R ∙ R ∙ F ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ HasCardinal.isCardinal problem₂₁ F x y ⟩
+      R ∙ F ∙ R ∙ x ∙ y ∙ z      ≈˘⟨ congʳ $ congʳ $ congʳ $ isRobin R R F ⟩
+      R ∙ R ∙ R ∙ F ∙ x ∙ y ∙ z  ≈⟨ congʳ $ HasCardinal.isCardinal problem₂₁ F x y ⟩
       F ∙ y ∙ x ∙ z              ≈⟨ isFinch y x z ⟩
       z ∙ x ∙ y                  ∎
   }
@@ -374,7 +374,7 @@ problem₂₉ : ⦃ _ : HasCardinal ⦄ ⦃ _ : HasVireo ⦄ → HasFinch
 problem₂₉ = record
   { F = C ∙ V
   ; isFinch = λ x y z → begin
-      C ∙ V ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal V x y ⟩
+      C ∙ V ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal V x y ⟩
       V ∙ y ∙ x ∙ z      ≈⟨ isVireo y x z ⟩
       z ∙ y ∙ x          ∎
   }
@@ -388,7 +388,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₁ = record
     { C* = B ∙ C
     ; isCardinalOnceRemoved = λ x y z w → begin
-        B ∙ C ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird C x y ⟩
+        B ∙ C ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ isBluebird C x y ⟩
         C ∙ (x ∙ y) ∙ z ∙ w    ≈⟨ isCardinal (x ∙ y) z w ⟩
         x ∙ y ∙ w ∙ z          ∎
     }
@@ -399,7 +399,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₂ = record
     { R* = C* ∙ C*
     ; isRobinOnceRemoved = λ x y z w → begin
-        C* ∙ C* ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ isCardinalOnceRemoved C* x y z ⟩
+        C* ∙ C* ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ isCardinalOnceRemoved C* x y z ⟩
         C* ∙ x ∙ z ∙ y ∙ w       ≈⟨ isCardinalOnceRemoved x z y w ⟩
         x ∙ z ∙ w ∙ y            ∎
     }
@@ -410,7 +410,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₃ = record
     { F* = B ∙ C* ∙ R*
     ; isFinchOnceRemoved = λ x y z w → begin
-        B ∙ C* ∙ R* ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird C* R* x ⟩
+        B ∙ C* ∙ R* ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird C* R* x ⟩
         C* ∙ (R* ∙ x) ∙ y ∙ z ∙ w    ≈⟨ isCardinalOnceRemoved (R* ∙ x) y z w ⟩
         R* ∙ x ∙ y ∙ w ∙ z           ≈⟨ isRobinOnceRemoved x y w z ⟩
         x ∙ w ∙ z ∙ y                ∎
@@ -422,7 +422,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₄ = record
     { V* = C* ∙ F*
     ; isVireoOnceRemoved = λ x y z w → begin
-        C* ∙ F* ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ isCardinalOnceRemoved F* x y z ⟩
+        C* ∙ F* ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ isCardinalOnceRemoved F* x y z ⟩
         F* ∙ x ∙ z ∙ y ∙ w       ≈⟨ isFinchOnceRemoved x z y w ⟩
         x ∙ w ∙ y ∙ z            ∎
     }
@@ -433,7 +433,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₅-C** = record
     { C** = B ∙ C*
     ; isCardinalTwiceRemoved = λ x y z₁ z₂ z₃ → begin
-        B ∙ C* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird C* x y ⟩
+        B ∙ C* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird C* x y ⟩
         C* ∙ (x ∙ y) ∙ z₁ ∙ z₂ ∙ z₃    ≈⟨ isCardinalOnceRemoved (x ∙ y) z₁ z₂ z₃ ⟩
         x ∙ y ∙ z₁ ∙ z₃ ∙ z₂           ∎
     }
@@ -442,7 +442,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₅-R** = record
     { R** = B ∙ R*
     ; isRobinTwiceRemoved = λ x y z₁ z₂ z₃ → begin
-        B ∙ R* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird R* x y ⟩
+        B ∙ R* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird R* x y ⟩
         R* ∙ (x ∙ y) ∙ z₁ ∙ z₂ ∙ z₃    ≈⟨ isRobinOnceRemoved (x ∙ y) z₁ z₂ z₃ ⟩
         x ∙ y ∙ z₂ ∙ z₃ ∙ z₁           ∎
     }
@@ -451,7 +451,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₅-F** = record
     { F** = B ∙ F*
     ; isFinchTwiceRemoved = λ x y z₁ z₂ z₃ → begin
-        B ∙ F* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird F* x y ⟩
+        B ∙ F* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird F* x y ⟩
         F* ∙ (x ∙ y) ∙ z₁ ∙ z₂ ∙ z₃    ≈⟨ isFinchOnceRemoved (x ∙ y) z₁ z₂ z₃ ⟩
         x ∙ y ∙ z₃ ∙ z₂ ∙ z₁           ∎
     }
@@ -460,7 +460,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ where
   problem₃₅-V** = record
     { V** = B ∙ V*
     ; isVireoTwiceRemoved = λ x y z₁ z₂ z₃ → begin
-        B ∙ V* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird V* x y ⟩
+        B ∙ V* ∙ x ∙ y ∙ z₁ ∙ z₂ ∙ z₃  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird V* x y ⟩
         V* ∙ (x ∙ y) ∙ z₁ ∙ z₂ ∙ z₃    ≈⟨ isVireoOnceRemoved (x ∙ y) z₁ z₂ z₃ ⟩
         x ∙ y ∙ z₃ ∙ z₁ ∙ z₂           ∎
     }
@@ -470,7 +470,7 @@ problem₃₆ = record
   { V = C* ∙ T
   ; isVireo = λ x y z → begin
       C* ∙ T ∙ x ∙ y ∙ z  ≈⟨ isCardinalOnceRemoved T x y z ⟩
-      T ∙ x ∙ z ∙ y       ≈⟨ ∙-congʳ $ isThrush x z ⟩
+      T ∙ x ∙ z ∙ y       ≈⟨ congʳ $ isThrush x z ⟩
       z ∙ x ∙ y           ∎
   }
 
@@ -478,7 +478,7 @@ problem₃₇′ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ → HasQueerB
 problem₃₇′ = record
   { Q = C ∙ B
   ; isQueerBird = λ x y z → begin
-      C ∙ B ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal B x y ⟩
+      C ∙ B ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal B x y ⟩
       B ∙ y ∙ x ∙ z      ≈⟨ isBluebird y x z ⟩
       y ∙ (x ∙ z)        ∎
   }
@@ -566,7 +566,7 @@ module _ ⦃ _ : HasCardinal ⦄ where
   problem₄₀-Q₁ = record
     { Q₁ = C ∙ Q₂
     ; isQuixoticBird = λ x y z → begin
-        C ∙ Q₂ ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal Q₂ x y ⟩
+        C ∙ Q₂ ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal Q₂ x y ⟩
         Q₂ ∙ y ∙ x ∙ z      ≈⟨ isQuizzicalBird y x z ⟩
         x ∙ (z ∙ y)         ∎
     }
@@ -575,7 +575,7 @@ module _ ⦃ _ : HasCardinal ⦄ where
   problem₄₀-Q₂ = record
     { Q₂ = C ∙ Q₁
     ; isQuizzicalBird = λ x y z → begin
-        C ∙ Q₁ ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal Q₁ x y ⟩
+        C ∙ Q₁ ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal Q₁ x y ⟩
         Q₁ ∙ y ∙ x ∙ z      ≈⟨ isQuixoticBird y x z ⟩
         y ∙ (z ∙ x)         ∎
     }
@@ -584,7 +584,7 @@ module _ ⦃ _ : HasCardinal ⦄ where
   problem₄₃-Q₃ = record
     { Q₃ = C ∙ Q₄
     ; isQuirkyBird = λ x y z → begin
-        C ∙ Q₄ ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal Q₄ x y ⟩
+        C ∙ Q₄ ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal Q₄ x y ⟩
         Q₄ ∙ y ∙ x ∙ z      ≈⟨ isQuackyBird y x z ⟩
         z ∙ (x ∙ y)         ∎
     }
@@ -593,7 +593,7 @@ module _ ⦃ _ : HasCardinal ⦄ where
   problem₄₃-Q₄ = record
     { Q₄ = C ∙ Q₃
     ; isQuackyBird = λ x y z → begin
-        C ∙ Q₃ ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal Q₃ x y ⟩
+        C ∙ Q₃ ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal Q₃ x y ⟩
         Q₃ ∙ y ∙ x ∙ z      ≈⟨ isQuirkyBird y x z ⟩
         z ∙ (y ∙ x)         ∎
     }
@@ -602,7 +602,7 @@ problem₄₄ : ⦃ _ : HasQuixoticBird ⦄ ⦃ _ : HasThrush ⦄ → HasQuackyB
 problem₄₄ = record
   { Q₄ = Q₁ ∙ T
   ; isQuackyBird = λ x y z → begin
-      Q₁ ∙ T ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isQuixoticBird T x y ⟩
+      Q₁ ∙ T ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isQuixoticBird T x y ⟩
       T ∙ (y ∙ x) ∙ z     ≈⟨ isThrush (y ∙ x) z ⟩
       z ∙ (y ∙ x)         ∎
   }
@@ -611,9 +611,9 @@ problem₄₅ : ⦃ _ : HasQueerBird ⦄ ⦃ _ : HasThrush ⦄ → HasBluebird
 problem₄₅ = record
   { B = Q ∙ T ∙ (Q ∙ Q)
   ; isBluebird = λ x y z → begin
-      Q ∙ T ∙ (Q ∙ Q) ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isQueerBird T (Q ∙ Q) x ⟩
-      Q ∙ Q ∙ (T ∙ x) ∙ y ∙ z      ≈⟨ ∙-congʳ $ isQueerBird Q (T ∙ x) y ⟩
-      T ∙ x ∙ (Q ∙ y) ∙ z          ≈⟨ ∙-congʳ $ isThrush x (Q ∙ y) ⟩
+      Q ∙ T ∙ (Q ∙ Q) ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isQueerBird T (Q ∙ Q) x ⟩
+      Q ∙ Q ∙ (T ∙ x) ∙ y ∙ z      ≈⟨ congʳ $ isQueerBird Q (T ∙ x) y ⟩
+      T ∙ x ∙ (Q ∙ y) ∙ z          ≈⟨ congʳ $ isThrush x (Q ∙ y) ⟩
       Q ∙ y ∙ x ∙ z                ≈⟨ isQueerBird y x z ⟩
       x ∙ (y ∙ z)                  ∎
   }
@@ -622,8 +622,8 @@ problem₄₆ : ⦃ _ : HasQueerBird ⦄ ⦃ _ : HasThrush ⦄ → HasCardinal
 problem₄₆ = record
   { C = Q ∙ Q ∙ (Q ∙ T)
   ; isCardinal = λ x y z → begin
-      Q ∙ Q ∙ (Q ∙ T) ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isQueerBird Q (Q ∙ T) x ⟩
-      Q ∙ T ∙ (Q ∙ x) ∙ y ∙ z      ≈⟨ ∙-congʳ $ isQueerBird T (Q ∙ x) y ⟩
+      Q ∙ Q ∙ (Q ∙ T) ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isQueerBird Q (Q ∙ T) x ⟩
+      Q ∙ T ∙ (Q ∙ x) ∙ y ∙ z      ≈⟨ congʳ $ isQueerBird T (Q ∙ x) y ⟩
       Q ∙ x ∙ (T ∙ y) ∙ z          ≈⟨ isQueerBird x (T ∙ y) z ⟩
       T ∙ y ∙ (x ∙ z)              ≈⟨ isThrush y (x ∙ z) ⟩
       x ∙ z ∙ y                    ∎
@@ -633,7 +633,7 @@ problem₄₇ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ → HasGoldfinch
 problem₄₇ = record
   { G = D ∙ C
   ; isGoldfinch = λ x y z w → begin
-      D ∙ C ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ isDove C x y z ⟩
+      D ∙ C ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ isDove C x y z ⟩
       C ∙ x ∙ (y ∙ z) ∙ w    ≈⟨ isCardinal x (y ∙ z) w ⟩
       x ∙ w ∙ (y ∙ z)        ∎
   } where

@@ -20,7 +20,7 @@ module _ ⦃ _ : HasComposition ⦄ ⦃ _ : HasMockingbird ⦄ where
         isFond : A IsFondOf (C ∙ C)
         isFond = sym $ begin
           C ∙ C        ≈⟨ isComposition A M C ⟩
-          A ∙ (M ∙ C)  ≈⟨ ∙-congˡ (isMockingbird C) ⟩
+          A ∙ (M ∙ C)  ≈⟨ congˡ (isMockingbird C) ⟩
           A ∙ (C ∙ C)  ∎
 
     in (C ∙ C , isFond)
@@ -79,7 +79,7 @@ module _ ⦃ _ : HasComposition ⦄ where
   problem₅ A B C =
     let E = B ∘ C
         D = A ∘ E
-    in (D , λ x → trans (isComposition A E x) $ ∙-congˡ (isComposition B C x))
+    in (D , λ x → trans (isComposition A E x) $ congˡ (isComposition B C x))
 
 module _ ⦃ _ : HasComposition ⦄ ⦃ _ : HasMockingbird ⦄ where
   problem₆ : ∀ A B → Compatible A B
@@ -101,7 +101,7 @@ module _ ⦃ _ : HasComposition ⦄ where
         isFond : N IsFondOf x
         isFond = begin
           N ∙ x        ≈⟨ isComposition H H x ⟩
-          H ∙ (H ∙ x)  ≈⟨ ∙-congˡ Hx≈y ⟩
+          H ∙ (H ∙ x)  ≈⟨ congˡ Hx≈y ⟩
           H ∙ y        ≈⟨ Hy≈x ⟩
           x            ∎
 
@@ -114,7 +114,7 @@ module _ ⦃ _ : HasComposition ⦄ ⦃ _ : HasMockingbird ⦄ ⦃ _ : HasKestre
 
         isHopelesslyEgocentric : IsHopelesslyEgocentric A
         isHopelesslyEgocentric x = begin
-          A ∙ x        ≈˘⟨ ∙-congʳ KA≈A ⟩
+          A ∙ x        ≈˘⟨ congʳ KA≈A ⟩
           (K ∙ A) ∙ x  ≈⟨ isKestrel A x ⟩
           A            ∎
 
@@ -125,7 +125,7 @@ problem₁₀ x y xz≈y = xz≈y y
 
 problem₁₁ : ∀ K → IsKestrel K → IsEgocentric K → IsHopelesslyEgocentric K
 problem₁₁ K isKestrel KK≈K x = begin
-  K ∙ x        ≈˘⟨ ∙-congʳ KK≈K ⟩
+  K ∙ x        ≈˘⟨ congʳ KK≈K ⟩
   (K ∙ K) ∙ x  ≈⟨ isKestrel K x ⟩
   K            ∎
 
@@ -143,13 +143,13 @@ problem₁₃ A x y Az≈A = begin
 
 problem₁₄ : ∀ A x y → IsHopelesslyEgocentric A → (A ∙ x) ∙ y ≈ A
 problem₁₄ A x y Az≈A = begin
-  (A ∙ x) ∙ y  ≈⟨ ∙-congʳ (Az≈A x) ⟩
+  (A ∙ x) ∙ y  ≈⟨ congʳ (Az≈A x) ⟩
   A ∙ y        ≈⟨ Az≈A y ⟩
   A            ∎
 
 problem₁₅ : ∀ A x → IsHopelesslyEgocentric A → IsHopelesslyEgocentric (A ∙ x)
 problem₁₅ A x Az≈A y = begin
-  (A ∙ x) ∙ y  ≈⟨ ∙-congʳ (Az≈A x) ⟩
+  (A ∙ x) ∙ y  ≈⟨ congʳ (Az≈A x) ⟩
   A ∙ y        ≈⟨ Az≈A y ⟩
   A            ≈˘⟨ Az≈A x ⟩
   A ∙ x        ∎
@@ -160,7 +160,7 @@ problem₁₆ K isKestrel x y Kx≈Ky = begin
   -- NOTE: for the right-most kestrel, we can choose any bird. (Since we know
   -- only of three birds to exist here, the only option is a combination of
   -- {K, x, y}).
-  (K ∙ x) ∙ K  ≈⟨ ∙-congʳ Kx≈Ky ⟩
+  (K ∙ x) ∙ K  ≈⟨ congʳ Kx≈Ky ⟩
   (K ∙ y) ∙ K  ≈⟨ isKestrel y K ⟩
   y            ∎
 
@@ -176,7 +176,7 @@ problem₁₈ : ⦃ _ : HasKestrel ⦄ → ∀ x → K IsFondOf K ∙ x → K Is
 problem₁₈ x K[Kx]≈Kx = begin
   K ∙ x              ≈˘⟨ isKestrel (K ∙ x) x ⟩
   -- NOTE: for the right-most x, we can choose any bird.
-  (K ∙ (K ∙ x)) ∙ x  ≈⟨ ∙-congʳ K[Kx]≈Kx ⟩
+  (K ∙ (K ∙ x)) ∙ x  ≈⟨ congʳ K[Kx]≈Kx ⟩
   (K ∙ x) ∙ x        ≈⟨ isKestrel x x ⟩
   x                  ∎
 
@@ -185,15 +185,15 @@ problem₁₈ x K[Kx]≈Kx = begin
 problem₁₉ : ∀ K → IsKestrel K → IsEgocentric K → ∀ x → x ≈ K
 problem₁₉ K isKestrel KK≈K x = begin
   x            ≈⟨ lemma x x ⟩
-  K ∙ x        ≈˘⟨ ∙-congʳ KK≈K ⟩
+  K ∙ x        ≈˘⟨ congʳ KK≈K ⟩
   (K ∙ K) ∙ x  ≈⟨ isKestrel K x ⟩
   K            ∎
   where
     lemma : ∀ y z → y ≈ K ∙ z
     lemma y z = begin
       y                  ≈˘⟨ isKestrel y z ⟩
-      (K ∙ y) ∙ z        ≈˘⟨ ∙-congʳ (∙-congʳ KK≈K) ⟩
-      ((K ∙ K) ∙ y) ∙ z  ≈⟨ ∙-congʳ (isKestrel K y) ⟩
+      (K ∙ y) ∙ z        ≈˘⟨ congʳ (congʳ KK≈K) ⟩
+      ((K ∙ K) ∙ y) ∙ z  ≈⟨ congʳ (isKestrel K y) ⟩
       K ∙ z              ∎
 
 module _ ⦃ _ : HasIdentity ⦄ where
@@ -274,9 +274,9 @@ module _ ⦃ _ : HasLark ⦄ where
 
   problem₂₆ : IsHopelesslyEgocentric L → ∀ x → x IsFondOf L
   problem₂₆ isHopelesslyEgocentric x = begin
-    x ∙ L        ≈˘⟨ ∙-congˡ $ isHopelesslyEgocentric L ⟩
+    x ∙ L        ≈˘⟨ congˡ $ isHopelesslyEgocentric L ⟩
     x ∙ (L ∙ L)  ≈˘⟨ isLark x L ⟩
-    (L ∙ x) ∙ L  ≈⟨ ∙-congʳ $ isHopelesslyEgocentric x ⟩
+    (L ∙ x) ∙ L  ≈⟨ congʳ $ isHopelesslyEgocentric x ⟩
     L ∙ L        ≈⟨ isHopelesslyEgocentric L ⟩
     L            ∎
 
@@ -285,9 +285,9 @@ module _ ⦃ _ : HasLark ⦄ ⦃ _ : HasKestrel ⦄ where
   problem₂₇ L≉K isFond =
     let K-fondOf-KK : K IsFondOf K ∙ K
         K-fondOf-KK = begin
-          K ∙ (K ∙ K)              ≈˘⟨ ∙-congʳ isFond ⟩
+          K ∙ (K ∙ K)              ≈˘⟨ congʳ isFond ⟩
           (L ∙ K) ∙ (K ∙ K)        ≈⟨ isLark K (K ∙ K) ⟩
-          K ∙ ((K ∙ K) ∙ (K ∙ K))  ≈⟨ ∙-congˡ $ isKestrel K (K ∙ K) ⟩
+          K ∙ ((K ∙ K) ∙ (K ∙ K))  ≈⟨ congˡ $ isKestrel K (K ∙ K) ⟩
           K ∙ K                    ∎
 
         isEgocentric : IsEgocentric K
@@ -302,7 +302,7 @@ module _ ⦃ _ : HasLark ⦄ ⦃ _ : HasKestrel ⦄ where
   problem₂₈ KL≈L =
     let isHopelesslyEgocentric : IsHopelesslyEgocentric L
         isHopelesslyEgocentric y = begin
-          L ∙ y        ≈˘⟨ ∙-congʳ KL≈L ⟩
+          L ∙ y        ≈˘⟨ congʳ KL≈L ⟩
           (K ∙ L) ∙ y  ≈⟨ isKestrel L y ⟩
           L            ∎
     in problem₂₆ isHopelesslyEgocentric
@@ -315,8 +315,8 @@ module _ ⦃ _ : HasLark ⦄ where
         isEgocentric : IsEgocentric (y ∙ y)
         isEgocentric = begin
           (y ∙ y) ∙ (y ∙ y)  ≈˘⟨ isLark (y ∙ y) y ⟩
-          (L ∙ (y ∙ y)) ∙ y  ≈˘⟨ ∙-congʳ (isLark L y) ⟩
-          ((L ∙ L) ∙ y) ∙ y  ≈⟨ ∙-congʳ [LL]y≈y ⟩
+          (L ∙ (y ∙ y)) ∙ y  ≈˘⟨ congʳ (isLark L y) ⟩
+          ((L ∙ L) ∙ y) ∙ y  ≈⟨ congʳ [LL]y≈y ⟩
           y ∙ y              ∎
 
         -- The expression of yy in terms of L and brackets.

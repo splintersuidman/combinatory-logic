@@ -96,19 +96,19 @@ module Reasoning where
   syntax step-≈˘ x y≈z y≈x = x ≈˘⟨ y≈x ⟩ y≈z
 
 -- Satz 6 (second part)
-∙-cong : Congruent₂ _≈_ _∙_
-∙-cong {X} {X′} {Y} {Y′} ⊢X==X′ ⊢Y==Y′ = s₃ where
+cong : Congruent₂ _≈_ _∙_
+cong {X} {X′} {Y} {Y′} ⊢X==X′ ⊢Y==Y′ = s₃ where
   s₁ = ⊢ X ∙ Y == X ∙ Y′    [ Q₂ ⊢Y==Y′ ]
   s₂ = ⊢ X ∙ Y′ == X′ ∙ Y′  [ prop₄ ⊢X==X′ ]
   s₃ = ⊢ X ∙ Y == X′ ∙ Y′   [ prop₃ s₁ s₂ ]
 
--- ∙-congˡ and ∙-congʳ follow from ∙-cong, but are also just different names for
+-- congˡ and congʳ follow from cong, but are also just different names for
 -- Q₂ and prop₄, respectively.
-∙-congˡ : LeftCongruent _≈_ _∙_
-∙-congˡ = Q₂
+congˡ : LeftCongruent _≈_ _∙_
+congˡ = Q₂
 
-∙-congʳ : RightCongruent _≈_ _∙_
-∙-congʳ = prop₄
+congʳ : RightCongruent _≈_ _∙_
+congʳ = prop₄
 
 -- TODO: Satz 7, 8
 
@@ -127,11 +127,11 @@ S = B ∙ (B ∙ W) ∙ (B ∙ B ∙ C)
 prop-S : ∀ {X} {Y} {Z} → ⊢ S ∙ X ∙ Y ∙ Z == X ∙ Z ∙ (Y ∙ Z)
 prop-S {X} {Y} {Z} = begin
   S ∙ X ∙ Y ∙ Z                          ≈⟨⟩
-  B ∙ (B ∙ W) ∙ (B ∙ B ∙ C) ∙ X ∙ Y ∙ Z  ≈⟨ ∙-congʳ $ ∙-congʳ B ⟩
-  B ∙ W ∙ (B ∙ B ∙ C ∙ X) ∙ Y ∙ Z        ≈⟨ ∙-congʳ B ⟩
+  B ∙ (B ∙ W) ∙ (B ∙ B ∙ C) ∙ X ∙ Y ∙ Z  ≈⟨ congʳ $ congʳ B ⟩
+  B ∙ W ∙ (B ∙ B ∙ C ∙ X) ∙ Y ∙ Z        ≈⟨ congʳ B ⟩
   W ∙ (B ∙ B ∙ C ∙ X ∙ Y) ∙ Z            ≈⟨ W ⟩
-  B ∙ B ∙ C ∙ X ∙ Y ∙ Z ∙ Z              ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ B ⟩
-  B ∙ (C ∙ X) ∙ Y ∙ Z ∙ Z                ≈⟨ ∙-congʳ B ⟩
+  B ∙ B ∙ C ∙ X ∙ Y ∙ Z ∙ Z              ≈⟨ congʳ $ congʳ $ congʳ B ⟩
+  B ∙ (C ∙ X) ∙ Y ∙ Z ∙ Z                ≈⟨ congʳ B ⟩
   C ∙ X ∙ (Y ∙ Z) ∙ Z                    ≈⟨ C ⟩
   X ∙ Z ∙ (Y ∙ Z)                        ∎
   where open Reasoning

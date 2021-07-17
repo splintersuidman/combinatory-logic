@@ -8,18 +8,18 @@ open import Relation.Nullary using (¬_)
 record IsForest {b ℓ} (Bird : Set b) (_≈_ : Rel Bird ℓ) (_∙_ : Op₂ Bird) : Set (b ⊔ ℓ) where
   field
     isEquivalence : IsEquivalence _≈_
-    ∙-cong : Congruent₂ _≈_ _∙_
+    cong : Congruent₂ _≈_ _∙_
 
   open IsEquivalence isEquivalence public
 
   setoid : Setoid b ℓ
   setoid = record { isEquivalence = isEquivalence }
 
-  ∙-congˡ : LeftCongruent _≈_ _∙_
-  ∙-congˡ A≈B = ∙-cong refl A≈B
+  congˡ : LeftCongruent _≈_ _∙_
+  congˡ A≈B = cong refl A≈B
 
-  ∙-congʳ : RightCongruent _≈_ _∙_
-  ∙-congʳ A≈B = ∙-cong A≈B refl
+  congʳ : RightCongruent _≈_ _∙_
+  congʳ A≈B = cong A≈B refl
 
 record Forest {b ℓ} : Set (lsuc (b ⊔ ℓ)) where
   infix  4 _≈_

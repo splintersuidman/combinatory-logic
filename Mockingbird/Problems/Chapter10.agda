@@ -17,15 +17,15 @@ module _ ⦃ _ : HasComposition ⦄ ⦃ _ : HasMockingbird ⦄ ⦃ _ : HasLark �
       where
         isMockingbirdComposer = λ x y → begin
           L ∙ x ∙ y    ≈⟨ isLark x y ⟩
-          x ∙ (y ∙ y)  ≈˘⟨ ∙-congˡ $ isMockingbird y ⟩
+          x ∙ (y ∙ y)  ≈˘⟨ congˡ $ isMockingbird y ⟩
           x ∙ (M ∙ y)  ∎
 
   hasSageBird : HasSageBird
   hasSageBird = record
     { Θ = M ∘ L
     ; isSageBird = λ x → begin
-        x ∙ ((M ∘ L) ∙ x)        ≈⟨ ∙-congˡ $ isComposition M L x ⟩
-        x ∙ (M ∙ (L ∙ x))        ≈⟨ ∙-congˡ $ isMockingbird (L ∙ x) ⟩
+        x ∙ ((M ∘ L) ∙ x)        ≈⟨ congˡ $ isComposition M L x ⟩
+        x ∙ (M ∙ (L ∙ x))        ≈⟨ congˡ $ isMockingbird (L ∙ x) ⟩
         x ∙ ((L ∙ x) ∙ (L ∙ x))  ≈˘⟨ isLark x (L ∙ x) ⟩
         (L ∙ x) ∙ (L ∙ x)        ≈˘⟨ isMockingbird (L ∙ x) ⟩
         M ∙ (L ∙ x)              ≈˘⟨ isComposition M L x ⟩
@@ -45,7 +45,7 @@ module _ ⦃ _ : HasComposition ⦄ ⦃ _ : HasMockingbird ⦄
         { L = A
         ; isLark = λ x y → begin
             (A ∙ x) ∙ y  ≈⟨ [Ax]y≈x[My] x y ⟩
-            x ∙ (M ∙ y)  ≈⟨ ∙-congˡ $ isMockingbird y ⟩
+            x ∙ (M ∙ y)  ≈⟨ congˡ $ isMockingbird y ⟩
             x ∙ (y ∙ y)  ∎
         }
 

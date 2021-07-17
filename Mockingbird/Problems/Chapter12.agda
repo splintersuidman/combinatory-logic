@@ -24,9 +24,9 @@ problem₂-BCM : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ ⦃ _ : HasMockin
 problem₂-BCM = record
   { L = C ∙ B ∙ M
   ; isLark = λ x y → begin
-      C ∙ B ∙ M ∙ x ∙ y  ≈⟨ ∙-congʳ $ isCardinal B M x ⟩
+      C ∙ B ∙ M ∙ x ∙ y  ≈⟨ congʳ $ isCardinal B M x ⟩
       B ∙ x ∙ M ∙ y      ≈⟨ isBluebird x M y ⟩
-      x ∙ (M ∙ y)        ≈⟨ ∙-congˡ $ isMockingbird y ⟩
+      x ∙ (M ∙ y)        ≈⟨ congˡ $ isMockingbird y ⟩
       x ∙ (y ∙ y)        ∎
   } where instance hasCardinal = Chapter₁₁.problem₂₁′
 
@@ -34,9 +34,9 @@ problem₂-BRM : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ ⦃ _ : HasMockin
 problem₂-BRM = record
   { L = R ∙ M ∙ B
   ; isLark = λ x y → begin
-      R ∙ M ∙ B ∙ x ∙ y  ≈⟨ ∙-congʳ $ isRobin M B x ⟩
+      R ∙ M ∙ B ∙ x ∙ y  ≈⟨ congʳ $ isRobin M B x ⟩
       B ∙ x ∙ M ∙ y      ≈⟨ isBluebird x M y ⟩
-      x ∙ (M ∙ y)        ≈⟨ ∙-congˡ $ isMockingbird y ⟩
+      x ∙ (M ∙ y)        ≈⟨ congˡ $ isMockingbird y ⟩
       x ∙ (y ∙ y)        ∎
   } where instance hasRobin = Chapter₁₁.problem₂₀
 
@@ -44,7 +44,7 @@ problem₃ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasWarbler ⦄ → HasLark
 problem₃ = record
   { L = B ∙ W ∙ B
   ; isLark = λ x y → begin
-      B ∙ W ∙ B ∙ x ∙ y  ≈⟨ ∙-congʳ $ isBluebird W B x ⟩
+      B ∙ W ∙ B ∙ x ∙ y  ≈⟨ congʳ $ isBluebird W B x ⟩
       W ∙ (B ∙ x) ∙ y    ≈⟨ isWarbler (B ∙ x) y ⟩
       B ∙ x ∙ y ∙ y      ≈⟨ isBluebird x y y ⟩
       x ∙ (y ∙ y)        ∎
@@ -55,7 +55,7 @@ problem₄ = record
   { L = Q ∙ M
   ; isLark = λ x y → begin
       Q ∙ M ∙ x ∙ y  ≈⟨ isQueerBird M x y ⟩
-      x ∙ (M ∙ y)    ≈⟨ ∙-congˡ $ isMockingbird y ⟩
+      x ∙ (M ∙ y)    ≈⟨ congˡ $ isMockingbird y ⟩
       x ∙ (y ∙ y)    ∎
   }
 
@@ -63,7 +63,7 @@ problem₅ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasRobin ⦄ ⦃ _ : HasMockingbird
 problem₅ = record
   { W′ = M₂ ∙ R
   ; isConverseWarbler = λ x y → begin
-      M₂ ∙ R ∙ x ∙ y       ≈⟨ ∙-congʳ $ isDoubleMockingbird R x ⟩
+      M₂ ∙ R ∙ x ∙ y       ≈⟨ congʳ $ isDoubleMockingbird R x ⟩
       R ∙ x ∙ (R ∙ x) ∙ y  ≈⟨ isRobin x (R ∙ x) y ⟩
       R ∙ x ∙ y ∙ x        ≈⟨ isRobin x y x ⟩
       y ∙ x ∙ x            ∎
@@ -97,7 +97,7 @@ problem₇ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ ⦃ _ : HasMockingbir
 problem₇ = record
   { W = B ∙ (T ∙ (B ∙ M ∙ (B ∙ B ∙ T))) ∙ (B ∙ B ∙ T)
   ; isWarbler = λ x y → begin
-      B ∙ (T ∙ (B ∙ M ∙ (B ∙ B ∙ T))) ∙ (B ∙ B ∙ T) ∙ x ∙ y  ≈˘⟨ ∙-congʳ $ ∙-congʳ $ isWarbler′ ⟩
+      B ∙ (T ∙ (B ∙ M ∙ (B ∙ B ∙ T))) ∙ (B ∙ B ∙ T) ∙ x ∙ y  ≈˘⟨ congʳ $ congʳ $ isWarbler′ ⟩
       W ∙ x ∙ y                                              ≈⟨ isWarbler x y ⟩
       x ∙ y ∙ y                                              ∎
   } where
@@ -113,7 +113,7 @@ problem₇ = record
     C ∙ (B ∙ M ∙ (B ∙ B ∙ T))                                    ≈⟨⟩
     B ∙ (T ∙ (B ∙ B ∙ T)) ∙ (B ∙ B ∙ T) ∙ (B ∙ M ∙ (B ∙ B ∙ T))  ≈⟨ isBluebird (T ∙ (B ∙ B ∙ T)) (B ∙ B ∙ T) (B ∙ M ∙ (B ∙ B ∙ T)) ⟩
     T ∙ (B ∙ B ∙ T) ∙ (B ∙ B ∙ T ∙ (B ∙ M ∙ (B ∙ B ∙ T)))        ≈⟨ isThrush (B ∙ B ∙ T) (B ∙ B ∙ T ∙ (B ∙ M ∙ (B ∙ B ∙ T))) ⟩
-    B ∙ B ∙ T ∙ (B ∙ M ∙ (B ∙ B ∙ T)) ∙ (B ∙ B ∙ T)              ≈⟨ ∙-congʳ $ isBluebird B T (B ∙ M ∙ (B ∙ B ∙ T)) ⟩
+    B ∙ B ∙ T ∙ (B ∙ M ∙ (B ∙ B ∙ T)) ∙ (B ∙ B ∙ T)              ≈⟨ congʳ $ isBluebird B T (B ∙ M ∙ (B ∙ B ∙ T)) ⟩
     B ∙ (T ∙ (B ∙ M ∙ (B ∙ B ∙ T))) ∙ (B ∙ B ∙ T)                ∎
 
 -- TODO: other expression in problem 7.
@@ -132,7 +132,7 @@ problem₉-W* : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ ⦃ _ : HasMocking
 problem₉-W* = record
   { W* = B ∙ W
   ; isWarblerOnceRemoved = λ x y z → begin
-      B ∙ W ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isBluebird W x y ⟩
+      B ∙ W ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isBluebird W x y ⟩
       W ∙ (x ∙ y) ∙ z    ≈⟨ isWarbler (x ∙ y) z ⟩
       x ∙ y ∙ z ∙ z      ∎
   } where instance hasWarbler = problem₇
@@ -141,7 +141,7 @@ problem₉-W** : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ ⦃ _ : HasMockin
 problem₉-W** = record
   { W** = B ∙ W*
   ; isWarblerTwiceRemoved = λ x y z w → begin
-      B ∙ W* ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird W* x y ⟩
+      B ∙ W* ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ isBluebird W* x y ⟩
       W* ∙ (x ∙ y) ∙ z ∙ w    ≈⟨ isWarblerOnceRemoved (x ∙ y) z w ⟩
       x ∙ y ∙ z ∙ w ∙ w       ∎
   } where
@@ -153,9 +153,9 @@ problem₁₀ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ ⦃ _ : HasWarbl
 problem₁₀ = record
   { H = B ∙ W ∙ (B ∙ C)
   ; isHummingbird = λ x y z → begin
-      B ∙ W ∙ (B ∙ C) ∙ x ∙ y ∙ z   ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird W (B ∙ C) x ⟩
-      W ∙ (B ∙ C ∙ x) ∙ y ∙ z       ≈⟨ ∙-congʳ $ isWarbler (B ∙ C ∙ x) y ⟩
-      B ∙ C ∙ x ∙ y ∙ y ∙ z         ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird C x y ⟩
+      B ∙ W ∙ (B ∙ C) ∙ x ∙ y ∙ z   ≈⟨ congʳ $ congʳ $ isBluebird W (B ∙ C) x ⟩
+      W ∙ (B ∙ C ∙ x) ∙ y ∙ z       ≈⟨ congʳ $ isWarbler (B ∙ C ∙ x) y ⟩
+      B ∙ C ∙ x ∙ y ∙ y ∙ z         ≈⟨ congʳ $ congʳ $ isBluebird C x y ⟩
       C ∙ (x ∙ y) ∙ y ∙ z           ≈⟨ isCardinal (x ∙ y) y z ⟩
       x ∙ y ∙ z ∙ y                 ∎
   }
@@ -191,7 +191,7 @@ problem₁₃ : ⦃ _ : HasStarling ⦄ ⦃ _ : HasRobin ⦄ → HasHummingbird
 problem₁₃ = record
   { H = S ∙ R
   ; isHummingbird = λ x y z → begin
-      S ∙ R ∙ x ∙ y ∙ z    ≈⟨ ∙-congʳ $ isStarling R x y ⟩
+      S ∙ R ∙ x ∙ y ∙ z    ≈⟨ congʳ $ isStarling R x y ⟩
       R ∙ y ∙ (x ∙ y) ∙ z  ≈⟨ isRobin y (x ∙ y) z ⟩
       x ∙ y ∙ z ∙ y        ∎
   }
@@ -200,7 +200,7 @@ problem₁₄-SR : ⦃ _ : HasStarling ⦄ ⦃ _ : HasRobin ⦄ → HasWarbler
 problem₁₄-SR = record
   { W = R ∙ (S ∙ R ∙ R) ∙ R
   ; isWarbler = λ x y → begin
-      R ∙ (S ∙ R ∙ R) ∙ R ∙ x ∙ y      ≈˘⟨ ∙-congʳ $ ∙-congʳ $ isRobin R R (S ∙ R ∙ R) ⟩
+      R ∙ (S ∙ R ∙ R) ∙ R ∙ x ∙ y      ≈˘⟨ congʳ $ congʳ $ isRobin R R (S ∙ R ∙ R) ⟩
       R ∙ R ∙ R ∙ (S ∙ R ∙ R) ∙ x ∙ y  ≈⟨⟩
       C ∙ (S ∙ R ∙ R) ∙ x ∙ y          ≈⟨⟩
       C ∙ (H ∙ R) ∙ x ∙ y              ≈⟨⟩
@@ -218,7 +218,7 @@ problem₁₄-SC = record
   ; isWarbler = λ x y → begin
       C ∙ (S ∙ (C ∙ C) ∙ (C ∙ C)) ∙ x ∙ y  ≈⟨⟩
       C ∙ (S ∙ R ∙ R) ∙ x ∙ y              ≈⟨ isCardinal (S ∙ R ∙ R) x y ⟩
-      S ∙ R ∙ R ∙ y ∙ x                    ≈⟨ ∙-congʳ $ isStarling R R y ⟩
+      S ∙ R ∙ R ∙ y ∙ x                    ≈⟨ congʳ $ isStarling R R y ⟩
       R ∙ y ∙ (R ∙ y) ∙ x                  ≈⟨ isRobin y (R ∙ y) x ⟩
       R ∙ y ∙ x ∙ y                        ≈⟨ isRobin y x y ⟩
       x ∙ y ∙ y                            ∎
@@ -249,7 +249,7 @@ module Exercises where
   exercise₁-a =
     ( D₁ ∙ C*
     , λ x y z w v → begin
-        D₁ ∙ C* ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ ∙-congʳ $ isDickcissel C* x y z w ⟩
+        D₁ ∙ C* ∙ x ∙ y ∙ z ∙ w ∙ v  ≈⟨ congʳ $ isDickcissel C* x y z w ⟩
         C* ∙ x ∙ y ∙ (z ∙ w) ∙ v     ≈⟨ isCardinalOnceRemoved x y (z ∙ w) v ⟩
         x ∙ y ∙ v ∙ (z ∙ w)          ∎
     )
@@ -268,8 +268,8 @@ module Exercises where
     ( G₁ ∙ (B ∙ M)
     , λ x y z w → begin
         G₁ ∙ (B ∙ M) ∙ x ∙ y ∙ z ∙ w  ≈⟨ isG₁ (B ∙ M) x y z w ⟩
-        B ∙ M ∙ x ∙ w ∙ (y ∙ z)       ≈⟨ ∙-congʳ $ isBluebird M x w ⟩
-        M ∙ (x ∙ w) ∙ (y ∙ z)         ≈⟨ ∙-congʳ $ isMockingbird (x ∙ w) ⟩
+        B ∙ M ∙ x ∙ w ∙ (y ∙ z)       ≈⟨ congʳ $ isBluebird M x w ⟩
+        M ∙ (x ∙ w) ∙ (y ∙ z)         ≈⟨ congʳ $ isMockingbird (x ∙ w) ⟩
         x ∙ w ∙ (x ∙ w) ∙ (y ∙ z)     ∎
     )
 
@@ -280,7 +280,7 @@ module Exercises where
     , λ x → begin
         B ∙ (T ∙ I) ∙ (T ∙ I) ∙ x  ≈⟨ isBluebird (T ∙ I) (T ∙ I) x ⟩
         T ∙ I ∙ (T ∙ I ∙ x)        ≈⟨ isThrush I (T ∙ I ∙ x) ⟩
-        T ∙ I ∙ x ∙ I              ≈⟨ ∙-congʳ $ isThrush I x ⟩
+        T ∙ I ∙ x ∙ I              ≈⟨ congʳ $ isThrush I x ⟩
         x ∙ I ∙ I                  ∎
     )
 
@@ -290,7 +290,7 @@ module Exercises where
   exercise₁-d (I₂ , isI₂) x = begin
     I₂ ∙ (F ∙ x)   ≈⟨ isI₂ (F ∙ x) ⟩
     F ∙ x ∙ I ∙ I  ≈⟨ isFinch x I I ⟩
-    I ∙ I ∙ x      ≈⟨ ∙-congʳ $ isIdentity I ⟩
+    I ∙ I ∙ x      ≈⟨ congʳ $ isIdentity I ⟩
     I ∙ x          ≈⟨ isIdentity x ⟩
     x              ∎
 
@@ -301,19 +301,19 @@ module Exercises where
   exercise₁-e (G₂ , isG₂) (I₂ , isI₂) x y = begin
     G₂ ∙ F ∙ (Q ∙ I₂) ∙ x ∙ y       ≈⟨ isG₂ F (Q ∙ I₂) x y ⟩
     F ∙ y ∙ (F ∙ y) ∙ (Q ∙ I₂ ∙ x)  ≈⟨ isFinch y (F ∙ y) (Q ∙ I₂ ∙ x) ⟩
-    Q ∙ I₂ ∙ x ∙ (F ∙ y) ∙ y        ≈⟨ ∙-congʳ $ isQueerBird I₂ x (F ∙ y) ⟩
-    x ∙ (I₂ ∙ (F ∙ y)) ∙ y          ≈⟨ ∙-congʳ $ ∙-congˡ $ exercise₁-d (I₂ , isI₂) y ⟩
+    Q ∙ I₂ ∙ x ∙ (F ∙ y) ∙ y        ≈⟨ congʳ $ isQueerBird I₂ x (F ∙ y) ⟩
+    x ∙ (I₂ ∙ (F ∙ y)) ∙ y          ≈⟨ congʳ $ congˡ $ exercise₁-d (I₂ , isI₂) y ⟩
     x ∙ y ∙ y                       ∎
 
   exercise₂ : ⦃ _ : HasBluebird ⦄ ⦃ _ : HasCardinal ⦄ ⦃ _ : HasWarbler ⦄
     → IsStarling (B ∙ (B ∙ (B ∙ W) ∙ C) ∙ (B ∙ B))
   exercise₂ x y z = begin
-    B ∙ (B ∙ (B ∙ W) ∙ C) ∙ (B ∙ B) ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird (B ∙ (B ∙ W) ∙ C) (B ∙ B) x ⟩
-    B ∙ (B ∙ W) ∙ C ∙ (B ∙ B ∙ x) ∙ y ∙ z        ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird (B ∙ W) C (B ∙ B ∙ x) ⟩
-    B ∙ W ∙ (C ∙ (B ∙ B ∙ x)) ∙ y ∙ z            ≈⟨ ∙-congʳ $ isBluebird W (C ∙ (B ∙ B ∙ x)) y ⟩
+    B ∙ (B ∙ (B ∙ W) ∙ C) ∙ (B ∙ B) ∙ x ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ isBluebird (B ∙ (B ∙ W) ∙ C) (B ∙ B) x ⟩
+    B ∙ (B ∙ W) ∙ C ∙ (B ∙ B ∙ x) ∙ y ∙ z        ≈⟨ congʳ $ congʳ $ isBluebird (B ∙ W) C (B ∙ B ∙ x) ⟩
+    B ∙ W ∙ (C ∙ (B ∙ B ∙ x)) ∙ y ∙ z            ≈⟨ congʳ $ isBluebird W (C ∙ (B ∙ B ∙ x)) y ⟩
     W ∙ (C ∙ (B ∙ B ∙ x) ∙ y) ∙ z                ≈⟨ isWarbler (C ∙ (B ∙ B ∙ x) ∙ y) z ⟩
-    C ∙ (B ∙ B ∙ x) ∙ y ∙ z ∙ z                  ≈⟨ ∙-congʳ $ isCardinal (B ∙ B ∙ x) y z ⟩
-    B ∙ B ∙ x ∙ z ∙ y ∙ z                        ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird B x z ⟩
+    C ∙ (B ∙ B ∙ x) ∙ y ∙ z ∙ z                  ≈⟨ congʳ $ isCardinal (B ∙ B ∙ x) y z ⟩
+    B ∙ B ∙ x ∙ z ∙ y ∙ z                        ≈⟨ congʳ $ congʳ $ isBluebird B x z ⟩
     B ∙ (x ∙ z) ∙ y ∙ z                          ≈⟨ isBluebird (x ∙ z) y z ⟩
     x ∙ z ∙ (y ∙ z)                              ∎
 
@@ -321,10 +321,10 @@ module Exercises where
   exercise₃ = record
     { Φ = B ∙ (B ∙ S) ∙ B
     ; isPhoenix = λ x y z w → begin
-        B ∙ (B ∙ S) ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird (B ∙ S) B x ⟩
-        B ∙ S ∙ (B ∙ x) ∙ y ∙ z ∙ w      ≈⟨ ∙-congʳ $ ∙-congʳ $ isBluebird S (B ∙ x) y ⟩
+        B ∙ (B ∙ S) ∙ B ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird (B ∙ S) B x ⟩
+        B ∙ S ∙ (B ∙ x) ∙ y ∙ z ∙ w      ≈⟨ congʳ $ congʳ $ isBluebird S (B ∙ x) y ⟩
         S ∙ (B ∙ x ∙ y) ∙ z ∙ w          ≈⟨ isStarling (B ∙ x ∙ y) z w ⟩
-        B ∙ x ∙ y ∙ w ∙ (z ∙ w)          ≈⟨ ∙-congʳ $ isBluebird x y w ⟩
+        B ∙ x ∙ y ∙ w ∙ (z ∙ w)          ≈⟨ congʳ $ isBluebird x y w ⟩
         x ∙ (y ∙ w) ∙ (z ∙ w)            ∎
     }
 
@@ -333,8 +333,8 @@ module Exercises where
     { Ψ = H* ∙ D₂
     ; isPsiBird = λ x y z w → begin
         H* ∙ D₂ ∙ x ∙ y ∙ z ∙ w     ≈⟨⟩
-        B ∙ H ∙ D₂ ∙ x ∙ y ∙ z ∙ w  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isBluebird H D₂ x ⟩
-        H ∙ (D₂ ∙ x) ∙ y ∙ z ∙ w    ≈⟨ ∙-congʳ $ isHummingbird (D₂ ∙ x) y z ⟩
+        B ∙ H ∙ D₂ ∙ x ∙ y ∙ z ∙ w  ≈⟨ congʳ $ congʳ $ congʳ $ isBluebird H D₂ x ⟩
+        H ∙ (D₂ ∙ x) ∙ y ∙ z ∙ w    ≈⟨ congʳ $ isHummingbird (D₂ ∙ x) y z ⟩
         D₂ ∙ x ∙ y ∙ z ∙ y ∙ w      ≈⟨ isDovekie x y z y w ⟩
         x ∙ (y ∙ z) ∙ (y ∙ w)       ∎
     } where
@@ -350,11 +350,11 @@ module Exercises where
   exercise₅-a =
     ( Φ ∙ (Φ ∙ (Φ ∙ B)) ∙ B
     , λ x y z w v → begin
-        Φ ∙ (Φ ∙ (Φ ∙ B)) ∙ B ∙ x ∙ y ∙ z ∙ w ∙ v    ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isPhoenix (Φ ∙ (Φ ∙ B)) B x y ⟩
-        Φ ∙ (Φ ∙ B) ∙ (B ∙ y) ∙ (x ∙ y) ∙ z ∙ w ∙ v  ≈⟨ ∙-congʳ $ ∙-congʳ $ isPhoenix (Φ ∙ B) (B ∙ y) (x ∙ y) z ⟩
-        Φ ∙ B ∙ (B ∙ y ∙ z) ∙ (x ∙ y ∙ z) ∙ w ∙ v    ≈⟨ ∙-congʳ $ isPhoenix B (B ∙ y ∙ z) (x ∙ y ∙ z) w ⟩
+        Φ ∙ (Φ ∙ (Φ ∙ B)) ∙ B ∙ x ∙ y ∙ z ∙ w ∙ v    ≈⟨ congʳ $ congʳ $ congʳ $ isPhoenix (Φ ∙ (Φ ∙ B)) B x y ⟩
+        Φ ∙ (Φ ∙ B) ∙ (B ∙ y) ∙ (x ∙ y) ∙ z ∙ w ∙ v  ≈⟨ congʳ $ congʳ $ isPhoenix (Φ ∙ B) (B ∙ y) (x ∙ y) z ⟩
+        Φ ∙ B ∙ (B ∙ y ∙ z) ∙ (x ∙ y ∙ z) ∙ w ∙ v    ≈⟨ congʳ $ isPhoenix B (B ∙ y ∙ z) (x ∙ y ∙ z) w ⟩
         B ∙ (B ∙ y ∙ z ∙ w) ∙ (x ∙ y ∙ z ∙ w) ∙ v    ≈⟨ isBluebird (B ∙ y ∙ z ∙ w) (x ∙ y ∙ z ∙ w) v ⟩
-        B ∙ y ∙ z ∙ w ∙ (x ∙ y ∙ z ∙ w ∙ v)          ≈⟨ ∙-congʳ $ isBluebird y z w ⟩
+        B ∙ y ∙ z ∙ w ∙ (x ∙ y ∙ z ∙ w ∙ v)          ≈⟨ congʳ $ isBluebird y z w ⟩
         y ∙ (z ∙ w) ∙ (x ∙ y ∙ z ∙ w ∙ v)            ∎
     )
 
@@ -365,8 +365,8 @@ module Exercises where
     { Ψ = Γ ∙ (K ∙ K)
     ; isPsiBird = λ x y z w → begin
         Γ ∙ (K ∙ K) ∙ x ∙ y ∙ z ∙ w            ≈⟨ isΓ (K ∙ K) x y z w ⟩
-        x ∙ (y ∙ z) ∙ (K ∙ K ∙ x ∙ y ∙ z ∙ w)  ≈⟨ ∙-congˡ $ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isKestrel K x ⟩
-        x ∙ (y ∙ z) ∙ (K ∙ y ∙ z ∙ w)          ≈⟨ ∙-congˡ $ ∙-congʳ $ isKestrel y z ⟩
+        x ∙ (y ∙ z) ∙ (K ∙ K ∙ x ∙ y ∙ z ∙ w)  ≈⟨ congˡ $ congʳ $ congʳ $ congʳ $ isKestrel K x ⟩
+        x ∙ (y ∙ z) ∙ (K ∙ y ∙ z ∙ w)          ≈⟨ congˡ $ congʳ $ isKestrel y z ⟩
         x ∙ (y ∙ z) ∙ (y ∙ w)                  ∎
     }
 
@@ -378,7 +378,7 @@ module Exercises where
   exercise₆-a =
     ( C ∙ S
     , λ x y z → begin
-        C ∙ S ∙ x ∙ y ∙ z  ≈⟨ ∙-congʳ $ isCardinal S x y ⟩
+        C ∙ S ∙ x ∙ y ∙ z  ≈⟨ congʳ $ isCardinal S x y ⟩
         S ∙ y ∙ x ∙ z      ≈⟨ isStarling y x z ⟩
         y ∙ z ∙ (x ∙ z)    ∎
     )
@@ -391,7 +391,7 @@ module Exercises where
     { W = S′ ∙ I
     ; isWarbler = λ x y → begin
         S′ ∙ I ∙ x ∙ y   ≈⟨ isS′ I x y ⟩
-        x ∙ y ∙ (I ∙ y)  ≈⟨ ∙-congˡ $ isIdentity y ⟩
+        x ∙ y ∙ (I ∙ y)  ≈⟨ congˡ $ isIdentity y ⟩
         x ∙ y ∙ y        ∎
     }
 
@@ -400,14 +400,14 @@ module Exercises where
   exercise₇ = let Q̂ = Q ∙ (Q ∙ Q ∙ (Q ∙ Q)) ∙ Q in
     ( Q̂
     , λ x y z → begin
-        C ∙ Q̂ ∙ W ∙ x ∙ y ∙ z ≈⟨ ∙-congʳ $ ∙-congʳ $ isCardinal Q̂ W x ⟩
+        C ∙ Q̂ ∙ W ∙ x ∙ y ∙ z ≈⟨ congʳ $ congʳ $ isCardinal Q̂ W x ⟩
         Q̂ ∙ x ∙ W ∙ y ∙ z                          ≈⟨⟩
-        Q ∙ (Q ∙ Q ∙ (Q ∙ Q)) ∙ Q ∙ x ∙ W ∙ y ∙ z  ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isQueerBird (Q ∙ Q ∙ (Q ∙ Q)) Q  x ⟩
-        Q ∙ (Q ∙ Q ∙ (Q ∙ Q) ∙ x) ∙ W ∙ y ∙ z      ≈⟨ ∙-congʳ $ isQueerBird (Q ∙ Q ∙ (Q ∙ Q) ∙ x) W y ⟩
+        Q ∙ (Q ∙ Q ∙ (Q ∙ Q)) ∙ Q ∙ x ∙ W ∙ y ∙ z  ≈⟨ congʳ $ congʳ $ congʳ $ isQueerBird (Q ∙ Q ∙ (Q ∙ Q)) Q  x ⟩
+        Q ∙ (Q ∙ Q ∙ (Q ∙ Q) ∙ x) ∙ W ∙ y ∙ z      ≈⟨ congʳ $ isQueerBird (Q ∙ Q ∙ (Q ∙ Q) ∙ x) W y ⟩
         W ∙ (Q ∙ Q ∙ (Q ∙ Q) ∙ x ∙ y) ∙ z          ≈⟨ isWarbler (Q ∙ Q ∙ (Q ∙ Q) ∙ x ∙ y) z ⟩
-        Q ∙ Q ∙ (Q ∙ Q) ∙ x ∙ y ∙ z ∙ z            ≈⟨ ∙-congʳ $ ∙-congʳ $ ∙-congʳ $ isQueerBird Q (Q ∙ Q) x ⟩
-        Q ∙ Q ∙ (Q ∙ x) ∙ y ∙ z ∙ z                ≈⟨ ∙-congʳ $ ∙-congʳ $ isQueerBird Q (Q ∙ x) y ⟩
-        Q ∙ x ∙ (Q ∙ y) ∙ z ∙ z                    ≈⟨ ∙-congʳ $ isQueerBird x (Q ∙ y) z ⟩
+        Q ∙ Q ∙ (Q ∙ Q) ∙ x ∙ y ∙ z ∙ z            ≈⟨ congʳ $ congʳ $ congʳ $ isQueerBird Q (Q ∙ Q) x ⟩
+        Q ∙ Q ∙ (Q ∙ x) ∙ y ∙ z ∙ z                ≈⟨ congʳ $ congʳ $ isQueerBird Q (Q ∙ x) y ⟩
+        Q ∙ x ∙ (Q ∙ y) ∙ z ∙ z                    ≈⟨ congʳ $ isQueerBird x (Q ∙ y) z ⟩
         Q ∙ y ∙ (x ∙ z) ∙ z                        ≈⟨ isQueerBird y (x ∙ z) z ⟩
         x ∙ z ∙ (y ∙ z)                            ∎
     )

@@ -38,5 +38,5 @@ ext′ A₁≋A₂ = ext λ _ → A₁≋A₂
   ; trans = λ x≋y y≋z w → trans (x≋y w) (y≋z w)
   }
 
-≋-∙-congʳ : RightCongruent _≋_ _∙_
-≋-∙-congʳ {w} {x} {y} x≋y = λ _ → ∙-congʳ (x≋y w)
+≋-congʳ : RightCongruent _≋_ _∙_
+≋-congʳ {w} {x} {y} x≋y = λ _ → congʳ (x≋y w)
