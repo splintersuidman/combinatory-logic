@@ -1,6 +1,6 @@
 open import Mockingbird.Forest using (Forest)
 
--- Curry's Lively Bird Forest
+-- Curry’s Lively Bird Forest
 module Mockingbird.Problems.Chapter14 {b ℓ} (forest : Forest {b} {ℓ}) where
 
 open import Data.Product using (_×_; _,_; ∃-syntax; proj₁; proj₂)
@@ -16,10 +16,11 @@ import Mockingbird.Problems.Chapter09 forest as Chapter₉
 open Forest forest
 
 private
+  infix 4 _↔_
   _↔_ : ∀ {a b} (A : Set a) (B : Set b) → Set (a ⊔ b)
   A ↔ B = (A → B) × (B → A)
 
-module _ {d} {Day : Set d} {_SingsOn_ : Bird → Day → Set d}
+module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
          (respects : ∀ {d} → (_SingsOn d) Respects _≈_)
          (P : Bird)
          -- This law of excluded middle is not stated in the problem as one of
@@ -29,7 +30,7 @@ module _ {d} {Day : Set d} {_SingsOn_ : Bird → Day → Set d}
   module _ (law₁ : ∀ {x y d} → y SingsOn d → (P ∙ x ∙ y) SingsOn d)
            (law₂ : ∀ {x y d} → ¬ (x SingsOn d) → (P ∙ x ∙ y) SingsOn d)
            (law₃ : ∀ {x y d} → x SingsOn d → (P ∙ x ∙ y) SingsOn d → y SingsOn d)
-           (law₄ : ∀ x → ∃[ y ] (∀ d → (y SingsOn d) ↔ ((P ∙ y ∙ x) SingsOn d))) where
+           (law₄ : ∀ x → ∃[ y ] (∀ d → y SingsOn d ↔ (P ∙ y ∙ x) SingsOn d)) where
 
     problem₁ : ∀ x d → x SingsOn d
     problem₁ x d = law₃ (proj₂ (law₄-⇐ x) d Pyx-sings) Pyx-sings
@@ -74,7 +75,7 @@ module _ {d} {Day : Set d} {_SingsOn_ : Bird → Day → Set d}
             C ∙ P ∙ x ∙ y  ≈⟨ isFond ⟩
             y              ∎
 
-          law₄ : ∀ d → (y SingsOn d) ↔ ((P ∙ y ∙ x) SingsOn d)
+          law₄ : ∀ d → y SingsOn d ↔ (P ∙ y ∙ x) SingsOn d
           law₄ d = (respects (sym Pyx≈y) , respects Pyx≈y)
       in (y , law₄)
 
@@ -93,7 +94,7 @@ module _ {d} {Day : Set d} {_SingsOn_ : Bird → Day → Set d}
             P ∙ (A ∙ P ∙ x ∙ (A ∙ P ∙ x)) ∙ x  ≈⟨⟩
             (P ∙ y ∙ x                         ∎)
 
-          law₄ : ∀ d → (y SingsOn d) ↔ ((P ∙ y ∙ x) SingsOn d)
+          law₄ : ∀ d → y SingsOn d ↔ (P ∙ y ∙ x) SingsOn d
           law₄ d = (respects y≈Pyx , respects (sym y≈Pyx))
       in (y , law₄)
 
