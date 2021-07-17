@@ -62,6 +62,33 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
           }
     in ↯
 
+  -- A constructive proof of Russel’s paradox, not using the LEM.
+  problem₁′ :
+      ∃[ a ] (∀ x d → (a ∙ x) SingsOn d ⇔ (x ∙ x) SingsOn d)
+    → (∀ x → ∃[ x′ ] (∀ y d → (x′ ∙ y) SingsOn d ⇔ (¬ (x ∙ y) SingsOn d)))
+    → ⊥
+  problem₁′ (a , is-a) neg =
+    let (a′ , is-a′) = neg a
+
+        a′a′-sings⇔¬a′a′-sings : ∀ d → (a′ ∙ a′) SingsOn d ⇔ (¬ (a′ ∙ a′) SingsOn d)
+        a′a′-sings⇔¬a′a′-sings d = ⇔-begin
+          (a′ ∙ a′) SingsOn d      ⇔⟨ is-a′ a′ d ⟩
+          (¬ (a ∙ a′) SingsOn d)   ⇔⟨ ⇔-¬ (is-a a′ d) ⟩
+          (¬ (a′ ∙ a′) SingsOn d)  ⇔-∎
+
+        a′a′-sings⇒¬a′a′-sings = λ {d} → Equivalence.f (a′a′-sings⇔¬a′a′-sings d)
+        ¬a′a′-sings⇒a′a′-sings = λ {d} → Equivalence.g (a′a′-sings⇔¬a′a′-sings d)
+
+        ¬¬a′a′-sings : ∀ {d} → ¬ ¬ (a′ ∙ a′) SingsOn d
+        ¬¬a′a′-sings ¬a′a′-sings = ¬a′a′-sings (¬a′a′-sings⇒a′a′-sings ¬a′a′-sings)
+
+        ¬a′a′-sings : ∀ {d} → ¬ (a′ ∙ a′) SingsOn d
+        ¬a′a′-sings a′a′-sings = a′a′-sings⇒¬a′a′-sings a′a′-sings a′a′-sings
+
+        ↯ : ⊥
+        ↯ = ¬¬a′a′-sings {day} ¬a′a′-sings
+    in ↯
+
   problem₂ : ⦃ _ : HasSageBird ⦄
     → ∃[ N ] (∀ x d → x SingsOn d ⇔ (¬ (N ∙ x) SingsOn d))
     → ⊥
