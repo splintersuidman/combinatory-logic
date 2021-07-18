@@ -127,10 +127,9 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
         λ N[ΘN]-sings → ¬ΘN-sings $ respects isFond N[ΘN]-sings
 
   problem₃ : ⦃ _ : HasSageBird ⦄
-    → ExcludedMiddle
     → ∃[ A ] (∀ x y d → (A ∙ x ∙ y) SingsOn d ⇔ (¬ x SingsOn d × ¬ y SingsOn d))
     → ⊥
-  problem₃ LEM (A , is-A) = ↯
+  problem₃ (A , is-A) = ↯
     where
       isFond : ∀ {x} → A ∙ x IsFondOf (Θ ∙ (A ∙ x))
       isFond {x} = isSageBird (A ∙ x)
@@ -150,8 +149,5 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
             Θ[Ax]-sings = respects isFond Ax[Θ[Ax]]-sings
         in ¬Θ[Ax]-sings x Θ[Ax]-sings
 
-      x-sings : ∀ x {d} → x SingsOn d
-      x-sings x = doubleNegation LEM x $ ¬¬x-sings x
-
       ↯ : ⊥
-      ↯ = ¬Θ[Ax]-sings A {day} $ x-sings $ Θ ∙ (A ∙ A)
+      ↯ = ¬¬x-sings (Θ ∙ (A ∙ A)) {day} $ ¬Θ[Ax]-sings A
