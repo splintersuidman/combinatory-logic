@@ -106,6 +106,22 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
               Equivalence.f (⇔-¬ (is-N (Θ ∙ N) day)) ¬ΘN-sings
         in Equivalence.f (is-N (Θ ∙ N) day) (respects isFond N[ΘN]-sings) N[ΘN]-sings
 
+  -- A constructive proof of problem 2, not using the LEM.
+  problem₂′ : ⦃ _ : HasSageBird ⦄
+    → ∃[ N ] (∀ x d → x SingsOn d ⇔ (¬ (N ∙ x) SingsOn d))
+    → ⊥
+  problem₂′ (N , is-N) = ¬¬ΘN-sings {day} ¬ΘN-sings
+    where
+      isFond : N IsFondOf (Θ ∙ N)
+      isFond = isSageBird N
+
+      ¬ΘN-sings : ∀ {d} → ¬ (Θ ∙ N) SingsOn d
+      ¬ΘN-sings {d} ΘN-sings = Equivalence.f (is-N (Θ ∙ N) d) ΘN-sings $ respects (sym isFond) ΘN-sings
+
+      ¬¬ΘN-sings : ∀ {d} → ¬ ¬ (Θ ∙ N) SingsOn d
+      ¬¬ΘN-sings {d} ¬ΘN-sings = Equivalence.f (⇔-¬ (is-N (Θ ∙ N) d)) ¬ΘN-sings $
+        λ N[ΘN]-sings → ¬ΘN-sings $ respects isFond N[ΘN]-sings
+
   problem₃ : ⦃ _ : HasSageBird ⦄
     → ∃[ A ] (∀ x y d → (A ∙ x ∙ y) SingsOn d ⇔ (¬ x SingsOn d × ¬ y SingsOn d))
     → ⊥
