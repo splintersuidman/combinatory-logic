@@ -6,7 +6,7 @@ module Mockingbird.Problems.Chapter15 {b ℓ} (forest : Forest {b} {ℓ}) where
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Product using (_×_; _,_; ∃-syntax; proj₁; proj₂)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
-open import Function using (_$_; case_of_; _⇔_; Equivalence; mk⇔)
+open import Function using (_$_; flip; case_of_; _⇔_; Equivalence; mk⇔)
 open import Function.Equivalence.Reasoning renaming (begin_ to ⇔-begin_; _∎ to _⇔-∎)
 open import Level using (_⊔_)
 open import Relation.Binary using (_Respects_)
@@ -25,6 +25,17 @@ open import Mockingbird.Forest.Birds forest
   module A⇔B = Equivalence A⇔B
   open import Relation.Binary.PropositionalEquality as ≡ using (cong)
 
+⇔-↯ : ∀ {a} {A : Set a} → ¬ (A ⇔ (¬ A))
+⇔-↯ {A = A} A⇔¬A = yes but no
+  where
+    _but_ = flip _$_
+
+    no : ¬ A
+    no A = Equivalence.f A⇔¬A A A
+
+    yes : A
+    yes = Equivalence.g A⇔¬A no
+
 module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
          (respects : ∀ {d} → (_SingsOn d) Respects _≈_)
          -- Day needs to be inhabited for this proof.
@@ -40,6 +51,9 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
 
     doubleNegation-⇔ : ExcludedMiddle → ∀ x {d} → (¬ ¬ x SingsOn d) ⇔ x SingsOn d
     doubleNegation-⇔ LEM x {d} = mk⇔ (doubleNegation LEM x) (λ x-sings ¬x-sings → ¬x-sings x-sings)
+
+    respects-⇔ : ∀ {x y d} → x ≈ y → x SingsOn d ⇔ y SingsOn d
+    respects-⇔ x≈y = mk⇔ (respects x≈y) (respects (sym x≈y))
 
   problem₁ :
       ExcludedMiddle
@@ -79,18 +93,7 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
           (¬ (a ∙ a′) SingsOn d)   ⇔⟨ ⇔-¬ (is-a a′ d) ⟩
           (¬ (a′ ∙ a′) SingsOn d)  ⇔-∎
 
-        a′a′-sings⇒¬a′a′-sings = λ {d} → Equivalence.f (a′a′-sings⇔¬a′a′-sings d)
-        ¬a′a′-sings⇒a′a′-sings = λ {d} → Equivalence.g (a′a′-sings⇔¬a′a′-sings d)
-
-        ¬¬a′a′-sings : ∀ {d} → ¬ ¬ (a′ ∙ a′) SingsOn d
-        ¬¬a′a′-sings ¬a′a′-sings = ¬a′a′-sings (¬a′a′-sings⇒a′a′-sings ¬a′a′-sings)
-
-        ¬a′a′-sings : ∀ {d} → ¬ (a′ ∙ a′) SingsOn d
-        ¬a′a′-sings a′a′-sings = a′a′-sings⇒¬a′a′-sings a′a′-sings a′a′-sings
-
-        ↯ : ⊥
-        ↯ = ¬¬a′a′-sings {day} ¬a′a′-sings
-    in ↯
+    in ⇔-↯ $ a′a′-sings⇔¬a′a′-sings day
 
   problem₂ : ⦃ _ : HasSageBird ⦄
     → ExcludedMiddle
@@ -114,17 +117,16 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
   problem₂′ : ⦃ _ : HasSageBird ⦄
     → ∃[ N ] (∀ x d → x SingsOn d ⇔ (¬ (N ∙ x) SingsOn d))
     → ⊥
-  problem₂′ (N , is-N) = ¬¬ΘN-sings {day} ¬ΘN-sings
+  problem₂′ (N , is-N) = ⇔-↯ $ ΘN-sings⇔¬ΘN-sings day
     where
       isFond : N IsFondOf (Θ ∙ N)
       isFond = isSageBird N
 
-      ¬ΘN-sings : ∀ {d} → ¬ (Θ ∙ N) SingsOn d
-      ¬ΘN-sings {d} ΘN-sings = Equivalence.f (is-N (Θ ∙ N) d) ΘN-sings $ respects (sym isFond) ΘN-sings
-
-      ¬¬ΘN-sings : ∀ {d} → ¬ ¬ (Θ ∙ N) SingsOn d
-      ¬¬ΘN-sings {d} ¬ΘN-sings = Equivalence.f (⇔-¬ (is-N (Θ ∙ N) d)) ¬ΘN-sings $
-        λ N[ΘN]-sings → ¬ΘN-sings $ respects isFond N[ΘN]-sings
+      ΘN-sings⇔¬ΘN-sings : ∀ d → (Θ ∙ N) SingsOn d ⇔ (¬ (Θ ∙ N) SingsOn d)
+      ΘN-sings⇔¬ΘN-sings d = ⇔-begin
+        (Θ ∙ N) SingsOn d          ⇔⟨ is-N (Θ ∙ N) d ⟩
+        ¬ (N ∙ (Θ ∙ N)) SingsOn d  ⇔⟨ ⇔-¬ $ respects-⇔ isFond ⟩
+        (¬ (Θ ∙ N) SingsOn d)      ⇔-∎
 
   problem₃ : ⦃ _ : HasSageBird ⦄
     → ∃[ A ] (∀ x y d → (A ∙ x ∙ y) SingsOn d ⇔ (¬ x SingsOn d × ¬ y SingsOn d))
