@@ -17,18 +17,18 @@ open Forest forest
 
 module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
          (respects : ∀ {d} → (_SingsOn d) Respects _≈_)
-         (P : Bird)
          -- This law of excluded middle is not stated in the problem as one of
          -- the laws, but in the solution given in the book, it is used.
-         (LEM : ∀ x d → (x SingsOn d) ⊎ (¬ (x SingsOn d))) where
+         (LEM : ∀ x d → (x SingsOn d) ⊎ (¬ x SingsOn d))
+         (P : Bird) where
 
   module _ (law₁ : ∀ {x y d} → y SingsOn d → (P ∙ x ∙ y) SingsOn d)
            (law₂ : ∀ {x y d} → ¬ (x SingsOn d) → (P ∙ x ∙ y) SingsOn d)
            (law₃ : ∀ {x y d} → x SingsOn d → (P ∙ x ∙ y) SingsOn d → y SingsOn d)
-           (law₄ : ∀ x → ∃[ y ] (∀ d → y SingsOn d ⇔ (P ∙ y ∙ x) SingsOn d)) where
+           (law₄ : ∀ x → ∃[ y ] (∀ {d} → y SingsOn d ⇔ (P ∙ y ∙ x) SingsOn d)) where
 
-    problem₁ : ∀ x d → x SingsOn d
-    problem₁ x d = law₃ (proj₂ (law₄-⇐ x) d Pyx-sings) Pyx-sings
+    problem₁ : ∀ x {d} → x SingsOn d
+    problem₁ x {d} = law₃ (proj₂ (law₄-⇐ x) d Pyx-sings) Pyx-sings
       where
         -- If y sings on all days on which x sings, then Pxy sings on all days.
         lemma-Pxy : ∀ y x → (y SingsOn d → x SingsOn d) → (P ∙ y ∙ x) SingsOn d
@@ -39,12 +39,12 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
         law₄-⇒ : ∀ x → ∃[ y ] (∀ d → y SingsOn d → (P ∙ y ∙ x) SingsOn d)
         law₄-⇒ x =
           let (y , p) = law₄ x
-          in (y , λ d → Equivalence.f (p d))
+          in (y , λ d → Equivalence.f p)
 
         law₄-⇐ : ∀ x → ∃[ y ] (∀ d → (P ∙ y ∙ x) SingsOn d → y SingsOn d)
         law₄-⇐ x =
           let (y , p) = law₄ x
-          in (y , λ d → Equivalence.g (p d))
+          in (y , λ d → Equivalence.g p)
 
         y = proj₁ $ law₄ x
 
@@ -59,7 +59,7 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
            (law₃ : ∀ {x y d} → x SingsOn d → (P ∙ x ∙ y) SingsOn d → y SingsOn d)
            ⦃ _ : HasCardinal ⦄ ⦃ _ : HasLark ⦄ where
 
-    problem₂ : ∀ x d → x SingsOn d
+    problem₂ : ∀ x {d} → x SingsOn d
     problem₂ = problem₁ law₁ law₂ law₃ $ λ x →
       let -- There exists a bird of which CPx is fond.
           (y , isFond) = Chapter₉.problem₂₅ (C ∙ P ∙ x)
@@ -70,15 +70,15 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
             C ∙ P ∙ x ∙ y  ≈⟨ isFond ⟩
             y              ∎
 
-          law₄ : ∀ d → y SingsOn d ⇔ (P ∙ y ∙ x) SingsOn d
-          law₄ d = mk⇔ (respects (sym Pyx≈y)) (respects Pyx≈y)
+          law₄ : ∀ {d} → y SingsOn d ⇔ (P ∙ y ∙ x) SingsOn d
+          law₄ {_} = mk⇔ (respects (sym Pyx≈y)) (respects Pyx≈y)
       in (y , law₄)
 
   module _ (law₁ : ∀ {x y d} → y SingsOn d → (P ∙ x ∙ y) SingsOn d)
            (law₂ : ∀ {x y d} → ¬ (x SingsOn d) → (P ∙ x ∙ y) SingsOn d)
            (law₃ : ∀ {x y d} → x SingsOn d → (P ∙ x ∙ y) SingsOn d → y SingsOn d) where
 
-    problem₃ : ∃[ A ] (∀ x y z → A ∙ x ∙ y ∙ z ≈ x ∙ (z ∙ z) ∙ y) → ∀ x d → x SingsOn d
+    problem₃ : ∃[ A ] (∀ x y z → A ∙ x ∙ y ∙ z ≈ x ∙ (z ∙ z) ∙ y) → ∀ x {d} → x SingsOn d
     problem₃ (A , Axyz≈x[zz]y) = problem₁ law₁ law₂ law₃ $ λ x →
       let y = A ∙ P ∙ x ∙ (A ∙ P ∙ x)
 
@@ -89,8 +89,8 @@ module _ {d} {Day : Set d} (_SingsOn_ : Bird → Day → Set d)
             P ∙ (A ∙ P ∙ x ∙ (A ∙ P ∙ x)) ∙ x  ≈⟨⟩
             (P ∙ y ∙ x                         ∎)
 
-          law₄ : ∀ d → y SingsOn d ⇔ (P ∙ y ∙ x) SingsOn d
-          law₄ d = mk⇔ (respects y≈Pyx) (respects (sym y≈Pyx))
+          law₄ : ∀ {d} → y SingsOn d ⇔ (P ∙ y ∙ x) SingsOn d
+          law₄ {_} = mk⇔ (respects y≈Pyx) (respects (sym y≈Pyx))
       in (y , law₄)
 
 -- TODO: bonus exercises
