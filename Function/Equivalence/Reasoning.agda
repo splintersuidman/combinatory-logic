@@ -27,7 +27,7 @@ infix  3 _∎
 begin_ : {A : Set a} {B : Set b} → A ⇔ B → A ⇔ B
 begin A⇔B = A⇔B
 
-_∎ : ∀ (A : Set a) → A ⇔ A
+_∎ : (A : Set a) → A ⇔ A
 _∎ = id-⇔
 
 _⇔⟨⟩_ : (A : Set a) {B : Set b} → A ⇔ B → A ⇔ B

@@ -32,6 +32,9 @@ subst′ respects y≈x = subst respects (sym y≈x)
 ⟨ P ⟩⊆⟨ Q ⟩ P⊆Q [ x∈P ] = [ P⊆Q x∈P ]
 ⟨ P ⟩⊆⟨ Q ⟩ P⊆Q (x∈⟨P⟩ ⟨∙⟩ y∈⟨P⟩ ∣ xy≈z) = ⟨ P ⟩⊆⟨ Q ⟩ P⊆Q x∈⟨P⟩ ⟨∙⟩ ⟨ P ⟩⊆⟨ Q ⟩ P⊆Q y∈⟨P⟩ ∣ xy≈z
 
+weaken : ∀ {p} {P Q : Pred Bird p} → P ⊆ Q → ⟨ P ⟩ ⊆ ⟨ Q ⟩
+weaken {P = P} {Q} = ⟨ P ⟩⊆⟨ Q ⟩
+
 ⟨_∩_⟩ : ∀ {p} (P Q : Pred Bird p) → ⟨ (P ∩ Q) ⟩ ⊆ ⟨ P ⟩ ∩ ⟨ Q ⟩
 ⟨ P ∩ Q ⟩ [ (x∈P , x∈Q) ] = ([ x∈P ] , [ x∈Q ])
 ⟨ P ∩ Q ⟩ (_⟨∙⟩_∣_ {x} {y} {z} x∈⟨P∩Q⟩ y∈⟨P∩Q⟩ xy≈z) =

@@ -15,7 +15,7 @@ private
 
 -- If P is a set of birds, we can think of ⟨ P ⟩ as the set of birds ‘generated
 -- by’ P.
-data ⟨_⟩ (P : Pred Bird p) : Bird → Set (p ⊔ b ⊔ ℓ) where
+data ⟨_⟩ (P : Pred Bird p) : Pred Bird (p ⊔ b ⊔ ℓ) where
   [_] : (x∈P : x ∈ P) → x ∈ ⟨ P ⟩
 
   _⟨∙⟩_∣_ :

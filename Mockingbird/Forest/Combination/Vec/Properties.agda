@@ -2,8 +2,9 @@ open import Mockingbird.Forest using (Forest)
 
 module Mockingbird.Forest.Combination.Vec.Properties {b ℓ} (forest : Forest {b} {ℓ}) where
 
-open import Data.Vec as Vec using (Vec; []; _∷_)
+open import Data.Vec as Vec using (Vec; []; _∷_; _++_)
 import Data.Vec.Relation.Unary.Any as Any
+open import Data.Vec.Relation.Unary.Any.Properties as Anyₚ using (++⁺ˡ; ++⁺ʳ)
 open import Function using (_$_; flip)
 open import Relation.Unary using (Pred; _∈_; _⊆_; ∅)
 
@@ -20,6 +21,23 @@ subst′ y≈x = subst (sym y≈x)
 
 ⟨[]⟩ : ⟨ [] ⟩ ⊆ ∅
 ⟨[]⟩ (X ⟨∙⟩ Y ∣ xy≈z) = ⟨[]⟩ X
+
+weaken-∷ : ∀ {n x y} {bs : Vec Bird n} → x ∈ ⟨ bs ⟩ → x ∈ ⟨ y ∷ bs ⟩
+weaken-∷ = Combinationₚ.weaken there
+
+-- TODO: maybe call this ++⁺ˡ.
+weaken-++ˡ : ∀ {m n x} {bs : Vec Bird m} {bs′ : Vec Bird n} → x ∈ ⟨ bs ⟩ → x ∈ ⟨ bs ++ bs′ ⟩
+weaken-++ˡ {bs = bs} {bs′} [ x∈bs ] = [ ++⁺ˡ x∈bs ]
+weaken-++ˡ {bs = bs} {bs′} (x∈⟨bs⟩ ⟨∙⟩ y∈⟨bs⟩ ∣ xy≈z) = weaken-++ˡ x∈⟨bs⟩ ⟨∙⟩ weaken-++ˡ y∈⟨bs⟩ ∣ xy≈z
+
+-- TODO: maybe call this ++⁺ʳ.
+weaken-++ʳ : ∀ {m n x} (bs : Vec Bird m) {bs′ : Vec Bird n} → x ∈ ⟨ bs′ ⟩ → x ∈ ⟨ bs ++ bs′ ⟩
+weaken-++ʳ bs {bs′} [ x∈bs′ ] = [ ++⁺ʳ bs x∈bs′ ]
+weaken-++ʳ bs {bs′} (x∈⟨bs′⟩ ⟨∙⟩ y∈⟨bs′⟩ ∣ xy≈z) = weaken-++ʳ bs x∈⟨bs′⟩ ⟨∙⟩ weaken-++ʳ bs y∈⟨bs′⟩ ∣ xy≈z
+
+++-comm : ∀ {m n x} (bs : Vec Bird m) (bs′ : Vec Bird n) → x ∈ ⟨ bs ++ bs′ ⟩ → x ∈ ⟨ bs′ ++ bs ⟩
+++-comm bs bs′ [ x∈bs++bs′ ] = [ Anyₚ.++-comm bs bs′ x∈bs++bs′ ]
+++-comm bs bs′ (x∈⟨bs++bs′⟩ ⟨∙⟩ y∈⟨bs++bs′⟩ ∣ xy≈z) = ++-comm bs bs′ x∈⟨bs++bs′⟩ ⟨∙⟩ ++-comm bs bs′ y∈⟨bs++bs′⟩ ∣ xy≈z
 
 open import Mockingbird.Forest.Birds forest
 open import Mockingbird.Forest.Extensionality forest
