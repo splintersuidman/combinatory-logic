@@ -502,3 +502,13 @@ open HasOwl ⦃ ... ⦄ public
 
 IsChoosy : Pred Bird (b ⊔ ℓ)
 IsChoosy A = ∀ x → A IsFondOf x → IsSageBird x
+
+IsJaybird : Pred Bird (b ⊔ ℓ)
+IsJaybird J = ∀ x y z w → J ∙ x ∙ y ∙ z ∙ w ≈ x ∙ y ∙ (x ∙ w ∙ z)
+
+record HasJaybird : Set (b ⊔ ℓ) where
+  field
+    J : Bird
+    isJaybird : IsJaybird J
+
+open HasJaybird ⦃ ... ⦄ public
