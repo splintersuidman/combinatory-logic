@@ -31,3 +31,4 @@ import Mockingbird.Problems.Chapter16
 import Mockingbird.Problems.Chapter17
 import Mockingbird.Problems.Chapter18
 import Mockingbird.Problems.Chapter19
+import Mockingbird.Problems.Chapter20
