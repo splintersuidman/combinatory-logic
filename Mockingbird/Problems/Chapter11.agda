@@ -280,7 +280,7 @@ module _ ⦃ _ : HasBluebird ⦄ ⦃ _ : HasThrush ⦄ where
 
   problem₂₂-b : ∀ x → C ∙ x ≈ B ∙ (T ∙ x) ∙ R
   problem₂₂-b x = begin
-    C ∙ x ≈⟨ problem₂₂-a x ⟩
+    C ∙ x              ≈⟨ problem₂₂-a x ⟩
     R ∙ x ∙ R          ≈⟨⟩
     B ∙ B ∙ T ∙ x ∙ R  ≈⟨ congʳ $ isBluebird B T x ⟩
     B ∙ (T ∙ x) ∙ R    ∎

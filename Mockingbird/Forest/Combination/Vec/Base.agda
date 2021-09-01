@@ -20,7 +20,6 @@ open import Data.Vec.Membership.Setoid setoid using () renaming (_∈_ to _∈�
 
 ⟨_⟩ : ∀ {n} → Vec Bird n → Pred Bird (b ⊔ ℓ)
 ⟨ bs ⟩ = Base.⟨ _∈′ bs ⟩
-  where
 
 [_]′ : ∀ {n} {bs : Vec Bird n} (i : Fin n) → Vec.lookup bs i ∈ ⟨ bs ⟩
 [_]′ {suc n} {x ∷ bs} zero = [ here refl ]
